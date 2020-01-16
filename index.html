@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="style/mystyle.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <p id="title" class="title">Courses Offered</p>
+    
+    <div id="search_block" class="search_block">
+        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for the courses" title="Type the course code">
+    </div>
+    
+    <div id="container" class="container"></div>
+
+        <!-- <div id="2" class="filter_div">
+            <div id="main_info_CS1136.002" class="main_info">
+
+                <div id="course_info_block" class="course_info_block">
+                    <div id="course_info" class="course_info">CS1136.002</div>
+                    <i id="course_info_edit_btn_CS1136.002" class="fa fa-edit" onClick="editCourseSeats(this.id)"></i>
+                    
+                    <i id="course_info_cross_btn_CS1136.002" class="fa fa-times" onClick="returnToCourseInfo(this.id)"></i>
+                    <i id="course_info_tick_btn_CS1136.002" class="fa fa-check" onClick="returnToCourseInfo(this.id)"></i>
+                </div>
+
+                <div id="seats_edit_CS1136.002" class="seats_edit">
+                    <input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                    id="curr_seats_edit_input_CS1136.002" class="curr_seats_edit_input" type="number" maxlength="3">
+                    <p id="seats_edit_sep_CS1136.002" class="seats_edit_sep">/</p>
+                    <input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                    id="total_seats_edit_input_CS1136.002" class="total_seats_edit_input" type="number" maxlength="3" name="quantity">
+                </div>
+
+                <div id="seats_CS1136.002" class="seats">
+                    <p id="curr_seats_CS1136.002" class="curr_seats"> 26</p>
+                    <p id="total_seats_CS1136.002" class="total_seats">/67</p>
+                </div>
+
+                <div id="course_btn_CS1136.002" class="course_btn">
+                    <button class="dec_btn" type="button" onClick="onClick()">
+                        <i class="fa fa-angle-down"></i>
+                    </button>
+                    <button class="inc_btn" type="button" onClick="onClick()">
+                        <i class="fa fa-angle-up"></i>
+                    </button>
+                </div>
+            </div>
+        </div> -->
+
+        <!-- <script type="text/javascript">
+            var clicks = 0;
+
+            function onClick() {
+                clicks += 1;
+                document.getElementById("clicks").innerHTML = clicks;
+            };
+        </script>
+        <button type="button" onClick="onClick()">Click me</button>
+        <p>Clicks: <a id="clicks">0</a></p> -->
+
+</body>
+
+<script src="script/myscript.js"></script>
+
+</html>

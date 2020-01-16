@@ -1,0 +1,235 @@
+    * {
+        box-sizing: border-box;
+
+    }
+
+    body {
+        text-align: center;        
+        background: aliceblue;
+
+    }
+    
+    .title {
+        font-size: 2em;
+        font-family: sans-serif;
+        font-weight: 700;
+        color: #555252
+    }
+
+    .search_block{
+        background: white;
+        width: 80%;
+        margin-left: 10%;
+    }
+
+    .container {
+        padding: 30px 0px;
+        overflow: hidden;
+        display: flex;
+        flex-flow: wrap;
+        justify-content: center;
+    }
+    
+    #myInput {
+        /* background-image: url('/assets/searchicon.png'); */
+        background: url("../assets/search.png");
+        background-position: 10px 10px;
+        background-repeat: no-repeat;
+        width: 100%;
+        font-size: 16px;
+        padding: 12px 20px 12px 40px;
+        border: 5px dashed #413838;
+    }
+
+    input:focus {
+        outline:none !important;
+    }
+
+    
+    .filter_div {
+        background-color: #4789a0;
+        color: #ffffff;
+        width: 20em;
+        border-radius: 6px;
+        text-align: center;
+        margin: 10px;
+        transition: 0.3s;
+        text-align: center;
+        transition: 0.3s;
+        display: flex;
+        height: 5em;
+        padding: 10px;
+        justify-content: space-between;
+        box-shadow: 20px 4px 16px 4px rgba(0, 0, 0, 0.22), 2px 10px 16px 0 rgba(0, 0, 0, 0.19);
+    }
+
+    .course_info {
+        font-size: 19px;
+    }
+    
+    .course_btn {
+        display: flex;
+        justify-content: space-evenly;
+        width: 35%;
+    }
+    
+    button {
+        border: none;
+        color: white;
+        padding: 2% 6%;
+        text-align: center;
+        /* box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
+        font-size: 2.5em;
+        cursor: pointer;
+    }
+    
+    .seats {
+        display: flex;
+        font-size: 3.5em;
+    }
+    
+    .curr_seats {
+        margin: 0;
+    }
+    
+    .total_seats {
+        margin: 0px;
+        font-size: 0.4em;
+    }
+    
+    .inc_btn {
+        font-size: 1.5em;
+        height: 70%;
+        margin-top: 14%;
+        background-color: #89b589;
+        -webkit-transition-duration: 0.4s; /* Safari */
+        transition-duration: 0.4s;
+    }
+
+    .inc_btn:hover {
+        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+    
+    .dec_btn {
+        background-color: #e8768b;
+        padding: 2% 12%;
+        -webkit-transition-duration: 0.4s; /* Safari */
+        transition-duration: 0.4s;
+    }
+
+    .dec_btn:hover {
+        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+
+    .filter_div:hover {
+        /* Start the shake animation and make the animation last for 0.5 seconds */
+        animation: shake 5s;
+      
+        /* When the animation is finished, start again */
+        animation-iteration-count: infinite;
+      }
+      
+      @keyframes shake {
+        0% { transform: translate(1px, 1px) rotate(0deg); }
+        10% { transform: translate(-1px, -2px) rotate(-1deg); }
+        20% { transform: translate(-3px, 0px) rotate(1deg); }
+        30% { transform: translate(3px, 2px) rotate(0deg); }
+        40% { transform: translate(1px, -1px) rotate(1deg); }
+        50% { transform: translate(-1px, 2px) rotate(-1deg); }
+        60% { transform: translate(-3px, 1px) rotate(0deg); }
+        70% { transform: translate(3px, 1px) rotate(-1deg); }
+        80% { transform: translate(-1px, -1px) rotate(1deg); }
+        90% { transform: translate(1px, 2px) rotate(0deg); }
+        100% { transform: translate(1px, -2px) rotate(-1deg); }
+      }
+
+    .main_info {
+        display: flex;
+        width: 100%;
+        text-align: center;
+        height: 100%;
+        justify-content: space-between;
+    }
+
+    .course_info_block {
+        text-align: left;
+    }
+
+    .fa-edit {
+        margin: 0 0.1em;
+        margin-top: 0.9em;
+        font-size: 22px;
+        cursor: pointer;
+    }
+
+    .fa-edit:hover {
+        color: #565050;
+    }
+
+    .seats_edit {
+        display: none;
+        font-size: 3.5em;
+    }
+
+    .curr_seats_edit_input {
+        text-align: center;
+        margin: 0;
+        width: 2.3em;
+        background-color: #ffffff;
+        border: 2px dashed #373030;
+        border-radius: 8px;
+        font-size: 36px;
+        font-weight: 700;
+        padding: 2px;       
+    }
+
+    .seats_edit_sep {
+        margin: 0 10px;
+        font-weight: 600
+    }
+
+    .total_seats_edit_input {
+        text-align: center;
+        font-size: 30px;
+        padding: 2px;
+        width: 2.4em;
+        font-weight: 700;
+        height: 70%;
+        background-color: #ffffff;
+        border: 2px dashed #373030;
+    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance:textfield;
+    }
+
+    .fa-times {
+        display: none;
+        margin: 0 0.1em;
+        margin-top: 0.9em;
+        font-size: 22px;
+        cursor: pointer;
+    }
+
+    .fa-times:hover {
+        color: #b64949;
+    }
+
+    .fa-check {
+        display: none;
+        margin: 0 0.1em;
+        margin-top: 0.9em;
+        font-size: 22px;
+        cursor: pointer;
+    }
+
+    .fa-check:hover {
+        color: #44d873;
+    }
