@@ -11,14 +11,15 @@
 
 <body>
     <p id="title" class="title">Courses Offered</p>
-    
+
     <div id="search_block" class="search_block">
-        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for the courses" title="Type the course code">
+        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for the courses"
+            title="Type the course code">
     </div>
-    
+
     <div id="container" class="container"></div>
 
-        <!-- <div id="2" class="filter_div">
+    <!-- <div id="2" class="filter_div">
             <div id="main_info_CS1136.002" class="main_info">
 
                 <div id="course_info_block" class="course_info_block">
@@ -53,7 +54,7 @@
             </div>
         </div> -->
 
-        <!-- <script type="text/javascript">
+    <!-- <script type="text/javascript">
             var clicks = 0;
 
             function onClick() {
@@ -64,8 +65,35 @@
         <button type="button" onClick="onClick()">Click me</button>
         <p>Clicks: <a id="clicks">0</a></p> -->
 
-</body>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-app.js"></script>
 
-<script src="script/myscript.js"></script>
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-analytics.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-database.js"></script>
+
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyBzgvDmmNRCK9-qRLiYM7lepmeSV4x8fWM",
+            authDomain: "courses-8eec7.firebaseapp.com",
+            databaseURL: "https://courses-8eec7.firebaseio.com",
+            projectId: "courses-8eec7",
+            storageBucket: "courses-8eec7.appspot.com",
+            messagingSenderId: "271497755267",
+            appId: "1:271497755267:web:7c2c33c077e910f9df39b6",
+            measurementId: "G-H1CSPQC02J"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+        console.log(firebase);
+    </script>
+
+    <script src="script/myscript.js"></script>
+
+</body>
 
 </html>

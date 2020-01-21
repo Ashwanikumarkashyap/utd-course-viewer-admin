@@ -145,97 +145,135 @@ let program = {
     "term": "Spring"
 };
 
+const ref = firebase.database().ref();
+
+const courses = ref.child('courses');
+
+courses.on("value", snap => {
+    let courses = snap.val();
+    console.log("courses are :", courses);
+});
+
+function writeNewPost() {
+    // A post entry.
+    var newCourse = {
+        "code": "CS7777.001",
+        "name": "Database Design",
+        "prof": "Nurjan",
+        "days": ["Monday", "Wednesday"],
+        "StartTime": ["16", "16"],
+        "StartTime": ["18", "18"],
+        "totalSeats": 40,
+        "currSeats": 30
+    };
+  
+    // Get a key for a new Post.
+    var newPostKey = ref.child('courses').push().key;
+
+    var updates = {};
+    updates[newPostKey] = newCourse;
+  
+    // Write the new post's data simultaneously in the posts list and the user's post list.
+    // var updates = {};
+    // updates['/posts/' + newPostKey] = postData;
+    // updates['/user-posts/' + uid + '/' + newPostKey] = postData;
+    return courses.update(updates);
+  }
+
+
 function myFunction() {
     let input = document.getElementById("myInput").value.toUpperCase().trim();
     filterGrid(input);
 }
 
-function displayCourses(program) {
+function generateGrid(program) {
 
     let courses = program.courses;
     let container = $("#container");
 
     for (let i = 0; i < courses.length; i++) {
 
-        var courseContainer = createDiv("container", courses[i].code, "filter_div", "div");
+        var courseContainer = createElemUtil("container", courses[i].code, "filter_div", "div");
 
-        var main_info = createDiv(courseContainer.id, "main_info_" + courses[i].code, "main_info", "div");
+        var main_info = createElemUtil(courseContainer.id, "main_info_" + courses[i].code, "main_info", "div");
 
-        var course_info_block = createDiv(main_info.id, "course_info_block_" + courses[i].code, "course_info_block", "div");
+        var course_info_block = createElemUtil(main_info.id, "course_info_block_" + courses[i].code, "course_info_block", "div");
         
-        var courseInfo = createDiv(course_info_block.id, "course_info_" + courses[i].code, "course_info", "div");
+        var courseInfo = createElemUtil(course_info_block.id, "course_info_" + courses[i].code, "course_info", "div");
         courseInfo.innerHTML = courses[i].code;
         
-        var editBtn = createDiv(course_info_block.id, "course_info_edit_btn_" + courses[i].code, "fa", "i");
+        var editBtn = createElemUtil(course_info_block.id, "course_info_edit_btn_" + courses[i].code, "fa", "i");
         editBtn.classList.add("fa-edit");
         editBtn.setAttribute("onClick", "editCourseSeats(this.id)");
 
-        var crossBtn = createDiv(course_info_block.id, "course_info_cross_btn_" + courses[i].code, "fa", "i");
+        var crossBtn = createElemUtil(course_info_block.id, "course_info_cross_btn_" + courses[i].code, "fa", "i");
         crossBtn.classList.add("fa-times");
         crossBtn.setAttribute("onClick", "returnToCourseInfo(this.id)");
 
-        var checkBtn = createDiv(course_info_block.id, "course_info_tick_btn_" + courses[i].code, "fa", "i");
+        var checkBtn = createElemUtil(course_info_block.id, "course_info_tick_btn_" + courses[i].code, "fa", "i");
         checkBtn.classList.add("fa-check");
         checkBtn.setAttribute("onClick", "returnToCourseInfo(this.id)");
 
 
 
-        var seats_edit = createDiv(main_info.id, "seats_edit_" + courses[i].code, "seats_edit", "div");
+        var seats_edit = createElemUtil(main_info.id, "seats_edit_" + courses[i].code, "seats_edit", "div");
         
-        var curr_seats_edit_input = createDiv(seats_edit.id, "curr_seats_edit_input_" + courses[i].code, "curr_seats_edit_input", "input");
+        var curr_seats_edit_input = createElemUtil(seats_edit.id, "curr_seats_edit_input_" + courses[i].code, "curr_seats_edit_input", "input");
         curr_seats_edit_input.setAttribute("maxLength", "3");
         curr_seats_edit_input.setAttribute("type", "number");
         curr_seats_edit_input.setAttribute("oninput", "javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);");
 
-        var seats_edit_sep = createDiv(seats_edit.id, "seats_edit_sep_" + courses[i].code, "seats_edit_sep", "p");
+        var seats_edit_sep = createElemUtil(seats_edit.id, "seats_edit_sep_" + courses[i].code, "seats_edit_sep", "p");
         seats_edit_sep.innerHTML = "/";
 
-        var total_seats_edit_input = createDiv(seats_edit.id, "total_seats_edit_input_" + courses[i].code, "total_seats_edit_input", "input");
+        var total_seats_edit_input = createElemUtil(seats_edit.id, "total_seats_edit_input_" + courses[i].code, "total_seats_edit_input", "input");
         total_seats_edit_input.setAttribute("maxLength", "3");
         total_seats_edit_input.setAttribute("type", "number");
         total_seats_edit_input.setAttribute("oninput", "javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);");
 
-        var seats = createDiv(main_info.id, "seats_" + courses[i].code, "seats", "div");
-        var currSeats = createDiv(seats.id, "curr_seats_" + courses[i].code, "curr_seats", "p");
+        var seats = createElemUtil(main_info.id, "seats_" + courses[i].code, "seats", "div");
+        var currSeats = createElemUtil(seats.id, "curr_seats_" + courses[i].code, "curr_seats", "p");
         currSeats.innerHTML = courses[i].currSeats;
 
-        var total_seats = createDiv(seats.id, "total_seats_" + courses[i].code, "total_seats", "p");
+        var total_seats = createElemUtil(seats.id, "total_seats_" + courses[i].code, "total_seats", "p");
         total_seats.innerHTML = "/" + courses[i].totalSeats;
 
-        var courseBtn = createDiv(main_info.id, "course_btn_" + courses[i].code, "course_btn", "div");
+        var courseBtn = createElemUtil(main_info.id, "course_btn_" + courses[i].code, "course_btn", "div");
 
-        var decBtn = createDiv(courseBtn.id, "dec_btn_" + courses[i].code, "dec_btn", "button");
-        var decBtnIcon = createDiv(decBtn.id, "dec_btn_icon_" + courses[i].code, "fa", "i");
+        var decBtn = createElemUtil(courseBtn.id, "dec_btn_" + courses[i].code, "dec_btn", "button");
+        decBtn.setAttribute("onClick", "updateCourseSeats(this.id)");
+        var decBtnIcon = createElemUtil(decBtn.id, "dec_btn_icon_" + courses[i].code, "fa", "i");
         decBtnIcon.classList.add("fa-angle-down");
 
 
-        var incBtn = createDiv(courseBtn.id, "inc_btn_" + courses[i].code, "inc_btn", "button");
-        var incBtnIcon = createDiv(incBtn.id, "inc_btn_icon_" + courses[i].code, "fa", "i");
+        var incBtn = createElemUtil(courseBtn.id, "inc_btn_" + courses[i].code, "inc_btn", "button");
+        incBtn.setAttribute("onClick", "updateCourseSeats(this.id)");
+        var incBtnIcon = createElemUtil(incBtn.id, "inc_btn_icon_" + courses[i].code, "fa", "i");
         incBtnIcon.classList.add("fa-angle-up");
     }
+}
 
-    $("button").on('click', function() {
-        var idArr = this.id.split("_");
-        var courseCode = idArr[idArr.length-1];
+function updateCourseSeats(id) {
+    var idArr = id.split("_");
+    var courseCode = idArr[idArr.length-1];
 
-        var approved = confirm("Are you sure you want to update the seats for the following course \n" + courseCode);
-        
-        if (approved) {
-            var currSeatElem = document.getElementById("curr_seats_" + courseCode);
-            var totalSeatELem = document.getElementById("total_seats_" + courseCode);
+    var approved = confirm("Are you sure you want to update the seats for the following course \n" + courseCode);
+    
+    if (approved) {
+        var currSeatElem = document.getElementById("curr_seats_" + courseCode);
+        var totalSeatELem = document.getElementById("total_seats_" + courseCode);
 
-            var currSeatCount = parseInt(currSeatElem.innerHTML);
+        var currSeatCount = parseInt(currSeatElem.innerHTML);
 
-            var totalSeatCount = parseInt(totalSeatELem.innerHTML.substring(1, totalSeatELem.innerHTML.length));
-            if (currSeatCount!=0 && idArr[0]== "dec") {
-                currSeatElem.innerHTML = --currSeatCount;
-            } else if (currSeatCount<totalSeatCount && idArr[0]== "inc") {
-                currSeatElem.innerHTML = ++currSeatCount;
-            }
-            
-            document.getElementById("curr_seats_" + courseCode).innerHTML
+        var totalSeatCount = parseInt(totalSeatELem.innerHTML.substring(1, totalSeatELem.innerHTML.length));
+        if (currSeatCount!=0 && idArr[0]== "dec") {
+            currSeatElem.innerHTML = --currSeatCount;
+        } else if (currSeatCount<totalSeatCount && idArr[0]== "inc") {
+            currSeatElem.innerHTML = ++currSeatCount;
         }
-    });
+        
+        document.getElementById("curr_seats_" + courseCode).innerHTML
+    }
 }
 
 function filterGrid(key) {
@@ -244,15 +282,13 @@ function filterGrid(key) {
         var id = elements[i].id;
         if (key.length != 0 && (elements[i].id.toString()).indexOf(key) == -1) {
             elements[i].style.display = "none";
-            // $(elements[i]).fadeOut(); 
         } else {
-            // $(elements[i]).fadeIn();
             elements[i].style.display = "flex";
         }
     }
 }
 
-function createDiv(parent, id_, class_, type) {
+function createElemUtil(parent, id_, class_, type) {
     let parent_elem = document.getElementById(parent);
     let elem;
 
@@ -350,4 +386,4 @@ function returnToCourseInfo(id) {
     }
 }
 
-displayCourses(program);
+generateGrid(program);
