@@ -1,134 +1,14 @@
 <!DOCTYPE html>
 <html>
-<style>
-    input[type=text],
-    select {
-        width: 100%;
-        padding: 12px 20px;
-        margin: 8px 0;
-        display: inline-block;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-sizing: border-box;
-    }
-
-    form {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-evenly;
-        padding: 20px;
-    }
-
-    input[type=submit] {
-        width: 100%;
-        background-color: #4CAF50;
-        color: white;
-        padding: 14px 20px;
-        margin: 8px 0;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-
-    input[type=submit]:hover {
-        background-color: #45a049;
-    }
-
-    .form_wrapper {
-        padding: 2px;
-        width: 100%;
-    }
-
-    input[type=checkbox] {
-        /* Double-sized Checkboxes */
-        -ms-transform: scale(1.5);
-        /* IE */
-        -moz-transform: scale(1.5);
-        /* FF */
-        -webkit-transform: scale(1.5);
-        /* Safari and Chrome */
-        -o-transform: scale(1.5);
-        /* Opera */
-        transform: scale(1.5);
-        padding: 10px;
-    }
-
-    .schedule_form {
-        display: flex;
-        justify-content: space-evenly;
-        flex-wrap: wrap;
-        width: 100%;
-    }
-
-    .schedule_input_block {
-        display: flex;
-    }
-
-    .day_input_block {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        margin: 0 5px;
-    }
-
-    .form_input_block {
-        display: flex;
-        width: 15em;
-        flex-direction: column;
-    }
-
-    label {
-        text-align: center;
-    }
-
-    p {
-        margin: 0;
-    }
-
-    .course_input {
-        border-radius: 5px;
-        background-color: #f2f2f2;
-        padding: 1em;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-evenly;
-    }
-
-    .collapsible {
-        background-color: #777;
-        color: white;
-        cursor: pointer;
-        padding: 10px;
-        width: 100%;
-        border: none;
-        text-align: center;
-        outline: none;
-        font-size: 15px;
-    }
-
-    .active,
-    .collapsible:hover {
-        background-color: #555;
-    }
-
-    .content {
-        padding: 10px;
-        display: none;
-        overflow: hidden;
-        background-color: #c0bcbc;
-        flex-wrap: wrap;
-        justify-content: space-evenly;
-        transition: max-height 0.2s ease-out;
-    }
-</style>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="style/formStyle.css">
 </head>
 <body>
 
     <h3>Program</h3>
 
-    <div id="container">
+    <div id="container" class = "container">
         <!-- <form action="/index.html">
 
             <div id="form_wrapper" class="form_wrapper">
@@ -224,25 +104,7 @@
 
         </form> -->
     </div>
-
-
-    <!-- <script>
-        var coll = document.getElementsByClassName("collapsible");
-        var i;
-
-        for (i = 0; i < coll.length; i++) {
-            coll[i].addEventListener("click", function () {
-                this.classList.toggle("active");
-                var content = this.nextElementSibling;
-                if (content.style.display === "flex") {
-                    content.style.display = "none";
-                } else {
-                    content.style.display = "flex";
-                }
-            });
-        }
-    </script> -->
-
+    <script src="script/util.js"></script>
     <script src="script/formScript.js"></script>
 
 </body>

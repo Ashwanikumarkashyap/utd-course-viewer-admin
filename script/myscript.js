@@ -1,389 +1,247 @@
-let program = {
-    "id": 1,
-    "courses": [{
-            "code": "CS6363.001",
-            "name": "Database Design",
-            "prof": "Nurjan",
-            "days": ["Monday", "Wednesday"],
-            "StartTime": ["16", "16"],
-            "StartTime": ["18", "18"],
-            "totalSeats": 40,
-            "currSeats": 30
-        },
-        {
-            "code": "CS1234.002",
-            "name": "Machine Learning",
-            "prof": "Anurag Nagar",
-            "days": ["Monday", "Wednesday"],
-            "StartTime": ["16", "16"],
-            "StartTime": ["18", "18"],
-            "totalSeats": 40,
-            "currSeats": 30
-
-        },
-        {
-            "code": "CS5678.003",
-            "name": "Data Structures",
-            "prof": "Greg Ozbirn",
-            "days": ["Monday", "Wednesday"],
-            "StartTime": ["16", "16"],
-            "StartTime": ["18", "18"],
-            "totalSeats": 40,
-            "currSeats": 30
-        }, {
-            "code": "CS6163.001",
-            "name": "Database Design",
-            "prof": "Nurjan",
-            "days": ["Monday", "Wednesday"],
-            "StartTime": ["16", "16"],
-            "StartTime": ["18", "18"],
-            "totalSeats": 40,
-            "currSeats": 30
-        },
-        {
-            "code": "CS1267.001",
-            "name": "Database Design",
-            "prof": "Nurjan",
-            "days": ["Monday", "Wednesday"],
-            "StartTime": ["16", "16"],
-            "StartTime": ["18", "18"],
-            "totalSeats": 40,
-            "currSeats": 30
-        },
-        {
-            "code": "CS1233.001",
-            "name": "Database Design",
-            "prof": "Nurjan",
-            "days": ["Monday", "Wednesday"],
-            "StartTime": ["16", "16"],
-            "StartTime": ["18", "18"],
-            "totalSeats": 40,
-            "currSeats": 30
-        },
-        {
-            "code": "CS6313.001",
-            "name": "Database Design",
-            "prof": "Nurjan",
-            "days": ["Monday", "Wednesday"],
-            "StartTime": ["16", "16"],
-            "StartTime": ["18", "18"],
-            "totalSeats": 40,
-            "currSeats": 30
-        },
-        {
-            "code": "CS6453.001",
-            "name": "Database Design",
-            "prof": "Nurjan",
-            "days": ["Monday", "Wednesday"],
-            "StartTime": ["16", "16"],
-            "StartTime": ["18", "18"],
-            "totalSeats": 40,
-            "currSeats": 30
-        },
-        {
-            "code": "CS6789.001",
-            "name": "Database Design",
-            "prof": "Nurjan",
-            "days": ["Monday", "Wednesday"],
-            "StartTime": ["16", "16"],
-            "StartTime": ["18", "18"],
-            "totalSeats": 40,
-            "currSeats": 30
-        },
-        {
-            "code": "CS0773.001",
-            "name": "Database Design",
-            "prof": "Nurjan",
-            "days": ["Monday", "Wednesday"],
-            "StartTime": ["16", "16"],
-            "StartTime": ["18", "18"],
-            "totalSeats": 40,
-            "currSeats": 30
-        },
-        {
-            "code": "CS1111.001",
-            "name": "Database Design",
-            "prof": "Nurjan",
-            "days": ["Monday", "Wednesday"],
-            "StartTime": ["16", "16"],
-            "StartTime": ["18", "18"],
-            "totalSeats": 40,
-            "currSeats": 30
-        },
-        {
-            "code": "CS1234.001",
-            "name": "Database Design",
-            "prof": "Nurjan",
-            "days": ["Monday", "Wednesday"],
-            "StartTime": ["16", "16"],
-            "StartTime": ["18", "18"],
-            "totalSeats": 40,
-            "currSeats": 30
-        },
-        {
-            "code": "CS5678.001",
-            "name": "Database Design",
-            "prof": "Nurjan",
-            "days": ["Monday", "Wednesday"],
-            "StartTime": ["16", "16"],
-            "StartTime": ["18", "18"],
-            "totalSeats": 40,
-            "currSeats": 30
-        },
-        {
-            "code": "CS6779.001",
-            "name": "Database Design",
-            "prof": "Nurjan",
-            "days": ["Monday", "Wednesday"],
-            "StartTime": ["16", "16"],
-            "StartTime": ["18", "18"],
-            "totalSeats": 40,
-            "currSeats": 30
-        },
-    ],
-    "year": 2020,
-    "term": "Spring"
-};
-
 const ref = firebase.database().ref();
 
-const courses = ref.child('courses');
+const programRef = ref.child('program_01');
+let program;
 
-courses.on("value", snap => {
-    let courses = snap.val();
-    console.log("courses are :", courses);
+programRef.once("value", snap => {
+    program = snap.val();
+    createCourseGrid(snap.val());
+
+    programRef.child('courses').on('child_added', function(childSnap) {
+        
+        var childProgram = {
+            "courses" : {}
+        };
+
+        program.courses[childSnap.key] = childSnap.val();
+
+        childProgram.courses[childSnap.key] = childSnap.val();
+        createCourseGrid(childProgram);
+    });
 });
 
-function writeNewPost() {
-    // A post entry.
-    var newCourse = {
-        "code": "CS7777.001",
-        "name": "Database Design",
-        "prof": "Nurjan",
-        "days": ["Monday", "Wednesday"],
-        "StartTime": ["16", "16"],
-        "StartTime": ["18", "18"],
-        "totalSeats": 40,
-        "currSeats": 30
-    };
-  
-    // Get a key for a new Post.
-    var newPostKey = ref.child('courses').push().key;
+programRef.child('courses').on('child_changed', function(childSnapshot) {
+    document.getElementById("curr_seats:"+ childSnapshot.key).innerHTML = childSnapshot.val().currSeats;
+    document.getElementById("total_seats:" + childSnapshot.key).innerHTML = "/" + childSnapshot.val().totalSeats;
 
-    var updates = {};
-    updates[newPostKey] = newCourse;
-  
-    // Write the new post's data simultaneously in the posts list and the user's post list.
-    // var updates = {};
-    // updates['/posts/' + newPostKey] = postData;
-    // updates['/user-posts/' + uid + '/' + newPostKey] = postData;
-    return courses.update(updates);
-  }
+});
 
+programRef.child('courses').on('child_removed', function(childSnapshot) {
+    $(document.getElementById(childSnapshot.key)).remove();
+});
 
-function myFunction() {
+function searchCourse() {
     let input = document.getElementById("myInput").value.toUpperCase().trim();
-    filterGrid(input);
+    filterCourseGrid(input);
 }
 
-function generateGrid(program) {
+function createCourseGrid(program) {
 
     let courses = program.courses;
-    let container = $("#container");
+    var courseGrid = document.getElementById("course_grid");
 
-    for (let i = 0; i < courses.length; i++) {
+    if (!courseGrid) {
+        courseGrid = createElemUtil("container", "course_grid", "course_grid", "div");
+    }
 
-        var courseContainer = createElemUtil("container", courses[i].code, "filter_div", "div");
+    for (let [key, value] of Object.entries(courses)) {
+        var courseContainer = document.getElementById(key);
 
-        var main_info = createElemUtil(courseContainer.id, "main_info_" + courses[i].code, "main_info", "div");
+        if (!courseContainer) {
+            courseContainer = createElemUtil(courseGrid.id, key, "filter_div", "div");
 
-        var course_info_block = createElemUtil(main_info.id, "course_info_block_" + courses[i].code, "course_info_block", "div");
-        
-        var courseInfo = createElemUtil(course_info_block.id, "course_info_" + courses[i].code, "course_info", "div");
-        courseInfo.innerHTML = courses[i].code;
-        
-        var editBtn = createElemUtil(course_info_block.id, "course_info_edit_btn_" + courses[i].code, "fa", "i");
-        editBtn.classList.add("fa-edit");
-        editBtn.setAttribute("onClick", "editCourseSeats(this.id)");
+            var main_info = createElemUtil(courseContainer.id, "main_info:" + key, "main_info", "div");
 
-        var crossBtn = createElemUtil(course_info_block.id, "course_info_cross_btn_" + courses[i].code, "fa", "i");
-        crossBtn.classList.add("fa-times");
-        crossBtn.setAttribute("onClick", "returnToCourseInfo(this.id)");
+            var course_info_block = createElemUtil(main_info.id, "course_info_block:" + key, "course_info_block", "div");
+            
+            var courseInfo = createElemUtil(course_info_block.id, "course_info:" + key, "course_info", "div");
+            courseInfo.innerHTML = value.code;
+            
+            var editBtn = createElemUtil(course_info_block.id, "course_info_edit_btn:" + key, "fa", "i");
+            editBtn.classList.add("fa-edit");
+            editBtn.setAttribute("onClick", "switchToCourseEditCard(this.id)");
 
-        var checkBtn = createElemUtil(course_info_block.id, "course_info_tick_btn_" + courses[i].code, "fa", "i");
-        checkBtn.classList.add("fa-check");
-        checkBtn.setAttribute("onClick", "returnToCourseInfo(this.id)");
+            var crossBtn = createElemUtil(course_info_block.id, "course_info_cross_btn:" + key, "fa", "i");
+            crossBtn.classList.add("fa-times");
+            crossBtn.classList.add("fa-course-back");
+            crossBtn.setAttribute("onClick", "returnToCourseInfoCard(this.id)");
 
+            var checkBtn = createElemUtil(course_info_block.id, "course_info_tick_btn:" + key, "fa", "i");
+            checkBtn.classList.add("fa-check");
+            checkBtn.setAttribute("onClick", "returnToCourseInfoCard(this.id)");
 
+            var delBtn = createElemUtil(course_info_block.id, "course_info_del_btn:" + key, "fa", "i");
+            delBtn.classList.add("fa-trash");
+            delBtn.setAttribute("onClick", "removeCourse(this.id)");
 
-        var seats_edit = createElemUtil(main_info.id, "seats_edit_" + courses[i].code, "seats_edit", "div");
-        
-        var curr_seats_edit_input = createElemUtil(seats_edit.id, "curr_seats_edit_input_" + courses[i].code, "curr_seats_edit_input", "input");
-        curr_seats_edit_input.setAttribute("maxLength", "3");
-        curr_seats_edit_input.setAttribute("type", "number");
-        curr_seats_edit_input.setAttribute("oninput", "javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);");
+            var seats_edit = createElemUtil(main_info.id, "seats_edit:" + key, "seats_edit", "div");
+            
+            var curr_seats_edit_input = createElemUtil(seats_edit.id, "curr_seats_edit_input:" + key, "curr_seats_edit_input", "input");
+            curr_seats_edit_input.setAttribute("maxLength", "3");
+            curr_seats_edit_input.setAttribute("type", "number");
+            curr_seats_edit_input.setAttribute("oninput", "javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);");
 
-        var seats_edit_sep = createElemUtil(seats_edit.id, "seats_edit_sep_" + courses[i].code, "seats_edit_sep", "p");
-        seats_edit_sep.innerHTML = "/";
+            var seats_edit_sep = createElemUtil(seats_edit.id, "seats_edit_sep:" + key, "seats_edit_sep", "p");
+            seats_edit_sep.innerHTML = "/";
 
-        var total_seats_edit_input = createElemUtil(seats_edit.id, "total_seats_edit_input_" + courses[i].code, "total_seats_edit_input", "input");
-        total_seats_edit_input.setAttribute("maxLength", "3");
-        total_seats_edit_input.setAttribute("type", "number");
-        total_seats_edit_input.setAttribute("oninput", "javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);");
+            var total_seats_edit_input = createElemUtil(seats_edit.id, "total_seats_edit_input:" + key, "total_seats_edit_input", "input");
+            total_seats_edit_input.setAttribute("maxLength", "3");
+            total_seats_edit_input.setAttribute("type", "number");
+            total_seats_edit_input.setAttribute("oninput", "javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);");
 
-        var seats = createElemUtil(main_info.id, "seats_" + courses[i].code, "seats", "div");
-        var currSeats = createElemUtil(seats.id, "curr_seats_" + courses[i].code, "curr_seats", "p");
-        currSeats.innerHTML = courses[i].currSeats;
+            var seats = createElemUtil(main_info.id, "seats:" + key, "seats", "div");
+            var currSeats = createElemUtil(seats.id, "curr_seats:" + key, "curr_seats", "p");
+            currSeats.innerHTML = value.currSeats;
 
-        var total_seats = createElemUtil(seats.id, "total_seats_" + courses[i].code, "total_seats", "p");
-        total_seats.innerHTML = "/" + courses[i].totalSeats;
+            var total_seats = createElemUtil(seats.id, "total_seats:" + key, "total_seats", "p");
+            total_seats.innerHTML = "/" + value.totalSeats;
 
-        var courseBtn = createElemUtil(main_info.id, "course_btn_" + courses[i].code, "course_btn", "div");
+            var courseBtn = createElemUtil(main_info.id, "course_btn:" + key, "course_btn", "div");
 
-        var decBtn = createElemUtil(courseBtn.id, "dec_btn_" + courses[i].code, "dec_btn", "button");
-        decBtn.setAttribute("onClick", "updateCourseSeats(this.id)");
-        var decBtnIcon = createElemUtil(decBtn.id, "dec_btn_icon_" + courses[i].code, "fa", "i");
-        decBtnIcon.classList.add("fa-angle-down");
+            var decBtn = createElemUtil(courseBtn.id, "dec_btn:" + key, "dec_btn", "button");
+            decBtn.setAttribute("onClick", "updateCourseSeats(this.id)");
+            var decBtnIcon = createElemUtil(decBtn.id, "dec_btn_icon:" + key, "fa", "i");
+            decBtnIcon.classList.add("fa-angle-down");
 
-
-        var incBtn = createElemUtil(courseBtn.id, "inc_btn_" + courses[i].code, "inc_btn", "button");
-        incBtn.setAttribute("onClick", "updateCourseSeats(this.id)");
-        var incBtnIcon = createElemUtil(incBtn.id, "inc_btn_icon_" + courses[i].code, "fa", "i");
-        incBtnIcon.classList.add("fa-angle-up");
+            var incBtn = createElemUtil(courseBtn.id, "inc_btn:" + key, "inc_btn", "button");
+            incBtn.setAttribute("onClick", "updateCourseSeats(this.id)");
+            var incBtnIcon = createElemUtil(incBtn.id, "inc_btn_icon:" + key, "fa", "i");
+            incBtnIcon.classList.add("fa-angle-up");
+            
+        } else {
+            document.getElementById("curr_seats:"+ key).innerHTML = value.currSeats;
+            document.getElementById("total_seats:" + key).innerHTML = "/" + value.totalSeats;
+        }
     }
 }
 
-function updateCourseSeats(id) {
-    var idArr = id.split("_");
-    var courseCode = idArr[idArr.length-1];
+function removeCourse(id) {
 
-    var approved = confirm("Are you sure you want to update the seats for the following course \n" + courseCode);
+    var idArr = id.split(":");
+    var courseCode = idArr[idArr.length-1];    
     
+    ref.child('program_01').child('courses/' + courseCode).remove().then(() => {
+        // successfully deleted
+    });
+    
+}
+
+function updateCourseSeats(id) {
+    var idArr = id.split(":");
+    var courseCode = idArr[idArr.length-1];
+    var approved = confirm("Are you sure you want to update the seats for the following course \n" + courseCode);
+
     if (approved) {
-        var currSeatElem = document.getElementById("curr_seats_" + courseCode);
-        var totalSeatELem = document.getElementById("total_seats_" + courseCode);
+        var currSeatElem = document.getElementById("curr_seats:" + courseCode);
+        var totalSeatELem = document.getElementById("total_seats:" + courseCode);
 
         var currSeatCount = parseInt(currSeatElem.innerHTML);
 
         var totalSeatCount = parseInt(totalSeatELem.innerHTML.substring(1, totalSeatELem.innerHTML.length));
-        if (currSeatCount!=0 && idArr[0]== "dec") {
-            currSeatElem.innerHTML = --currSeatCount;
-        } else if (currSeatCount<totalSeatCount && idArr[0]== "inc") {
-            currSeatElem.innerHTML = ++currSeatCount;
-        }
-        
-        document.getElementById("curr_seats_" + courseCode).innerHTML
-    }
-}
 
-function filterGrid(key) {
-    let elements = document.getElementsByClassName("filter_div");
-    for (let i = 0; i < elements.length; i++) {
-        var id = elements[i].id;
-        if (key.length != 0 && (elements[i].id.toString()).indexOf(key) == -1) {
-            elements[i].style.display = "none";
+        if (currSeatCount!=0 && idArr[0].indexOf("dec")>=0) {
+            --currSeatCount;
+        } else if (currSeatCount<totalSeatCount && idArr[0].indexOf("inc")>=0) {
+            ++currSeatCount;
         } else {
-            elements[i].style.display = "flex";
+            return;
+        }
+
+        var updates = {};
+        updates['/program_01/courses/' + courseCode + "/currSeats"] = currSeatCount;
+        ref.update(updates).then(()=> {
+                // successfully updated
+        });
+    }
+}
+
+function filterCourseGrid(SearchKey) {
+    
+    let courses = program.courses;
+
+    for (let [key, value] of Object.entries(courses)) {
+        if (key.length != 0 && (value.code.toString()).indexOf(SearchKey) == -1) {
+            document.getElementById(key).style.display = "none";
+        } else {
+            document.getElementById(key).style.display = "flex";
         }
     }
 }
 
-function createElemUtil(parent, id_, class_, type) {
-    let parent_elem = document.getElementById(parent);
-    let elem;
-
-    switch (type) {
-        case "div":
-            elem = document.createElement("div");
-            break;
-        case "p":
-            elem = document.createElement("p");
-            break;
-        case "button":
-            elem = document.createElement("button");
-            break;
-        case "i":
-            elem = document.createElement("i");
-            break;
-        case "input":
-            elem = document.createElement("input");
-            break;
-        default:
-            elem = document.createElement("div");
-    }
-
-    if (parent_elem != undefined) {
-        parent_elem.append(elem);
-    }
-
-    elem.setAttribute("id", id_);
-    elem.classList.add(class_);
-    return elem;
-}
-
-function editCourseSeats (id){
-    var idArr = id.split("_");
+function switchToCourseEditCard (id){
+    var idArr = id.split(":");
     var courseCode = idArr[idArr.length-1];
 
-    var currSeatElem = document.getElementById("seats_" + courseCode);
+    var currSeatElem = document.getElementById("seats:" + courseCode);
     currSeatElem.style.display = "none";
-    var totalSeatELem = document.getElementById("course_btn_" + courseCode);
+    var totalSeatELem = document.getElementById("course_btn:" + courseCode);
     totalSeatELem.style.display = "none";
 
-    var totalSeatELem = document.getElementById("seats_edit_" + courseCode);
+    var totalSeatELem = document.getElementById("seats_edit:" + courseCode);
     totalSeatELem.style.display = "flex";
 
 
-    document.getElementById("course_info_edit_btn_" + courseCode).style.display = "none";
+    document.getElementById("course_info_edit_btn:" + courseCode).style.display = "none";
 
-    document.getElementById("course_info_cross_btn_" + courseCode).style.display = "inline-flex";
-    document.getElementById("course_info_tick_btn_" + courseCode).style.display = "inline-flex";
+    document.getElementById("course_info_cross_btn:" + courseCode).style.display = "inline-flex";
+    document.getElementById("course_info_tick_btn:" + courseCode).style.display = "inline-flex";
+    document.getElementById("course_info_del_btn:" + courseCode).style.display = "inline-flex";
 
-    var currSeatElem = document.getElementById("curr_seats_" + courseCode);
-    var totalSeatELem = document.getElementById("total_seats_" + courseCode);
+    var currSeatElem = document.getElementById("curr_seats:" + courseCode);
+    var totalSeatELem = document.getElementById("total_seats:" + courseCode);
 
     var currSeatCount = parseInt(currSeatElem.innerHTML);
     console.log(totalSeatELem.innerHTML);
     var totalSeatCount = parseInt(totalSeatELem.innerHTML.substring(1, totalSeatELem.innerHTML.length));
 
-    var currInputFeild = document.getElementById("curr_seats_edit_input_" + courseCode);
-    var totalInputFeild = document.getElementById("total_seats_edit_input_" + courseCode);
+    var currInputFeild = document.getElementById("curr_seats_edit_input:" + courseCode);
+    var totalInputFeild = document.getElementById("total_seats_edit_input:" + courseCode);
     currInputFeild.value = currSeatCount;
     totalInputFeild.value = totalSeatCount;
 }
 
-function returnToCourseInfo(id) {
-    var idArr = id.split("_");
+function returnToCourseInfoCard(id) {
+    var idArr = id.split(":");
     var courseCode = idArr[idArr.length-1];
 
     if (id.indexOf("tick")>1) {
-        var currSeats = parseInt(document.getElementById("curr_seats_edit_input_" + courseCode).value);
-        var totalSeats = parseInt(document.getElementById("total_seats_edit_input_" + courseCode).value);
+        var currSeats = parseInt(document.getElementById("curr_seats_edit_input:" + courseCode).value);
+        var totalSeats = parseInt(document.getElementById("total_seats_edit_input:" + courseCode).value);
         if (currSeats>totalSeats) {
             return;
         }
-    }
 
-    var currSeatElem = document.getElementById("seats_" + courseCode);
-    currSeatElem.style.display = "flex";
-    var totalSeatELem = document.getElementById("course_btn_" + courseCode);
-    totalSeatELem.style.display = "flex";
+        var updates = {};
+        updates['/program_01/courses/' + courseCode + "/currSeats"] = parseInt(currSeats);
+        updates['/program_01/courses/' + courseCode + "/totalSeats"] = parseInt(totalSeats);
+        
+        ref.update(updates).then(()=> {
+            var currSeatElem = document.getElementById("seats:" + courseCode);
+            currSeatElem.style.display = "flex";
+            var totalSeatELem = document.getElementById("course_btn:" + courseCode);
+            totalSeatELem.style.display = "flex";
 
-    var totalSeatELem = document.getElementById("seats_edit_" + courseCode);
-    totalSeatELem.style.display = "none";
+            var totalSeatELem = document.getElementById("seats_edit:" + courseCode);
+            totalSeatELem.style.display = "none";
 
+            document.getElementById("course_info_edit_btn:" + courseCode).style.display = "inline-flex";
+            document.getElementById("course_info_cross_btn:" + courseCode).style.display = "none";
+            document.getElementById("course_info_tick_btn:" + courseCode).style.display = "none";
+            document.getElementById("course_info_del_btn:" + courseCode).style.display = "none";
 
-    document.getElementById("course_info_edit_btn_" + courseCode).style.display = "inline-flex";
+        });
+    } else {
+        var currSeatElem = document.getElementById("seats:" + courseCode);
+        currSeatElem.style.display = "flex";
+        var totalSeatELem = document.getElementById("course_btn:" + courseCode);
+        totalSeatELem.style.display = "flex";
 
-    document.getElementById("course_info_cross_btn_" + courseCode).style.display = "none";
-    document.getElementById("course_info_tick_btn_" + courseCode).style.display = "none";
+        var totalSeatELem = document.getElementById("seats_edit:" + courseCode);
+        totalSeatELem.style.display = "none";
 
-    if (id.indexOf("tick")>1) {
-        var currSeats = document.getElementById("curr_seats_edit_input_" + courseCode).value;
-        var totalSeats = document.getElementById("total_seats_edit_input_" + courseCode).value;
-        var currSeatElem = document.getElementById("curr_seats_" + courseCode).innerHTML = currSeats;
-        var totalSeatELem = document.getElementById("total_seats_" + courseCode).innerHTML = "/"+totalSeats;
+        document.getElementById("course_info_edit_btn:" + courseCode).style.display = "inline-flex";
+        document.getElementById("course_info_cross_btn:" + courseCode).style.display = "none";
+        document.getElementById("course_info_tick_btn:" + courseCode).style.display = "none";
+        document.getElementById("course_info_del_btn:" + courseCode).style.display = "none";
     }
 }
-
-generateGrid(program);

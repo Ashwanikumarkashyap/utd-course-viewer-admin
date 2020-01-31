@@ -10,7 +10,7 @@ input[type=text],
     }
 
 
-    input[type=number], select {
+    .form_input_number {
         width: 100%;
         padding: 12px 20px;
         margin: 8px 0;
@@ -26,6 +26,8 @@ input[type=text],
         flex-wrap: wrap;
         justify-content: space-evenly;
         padding: 20px;
+        background: #bc9e85c4;
+        border-radius: 13px;
     }
 
     input[type=submit] {
@@ -101,6 +103,8 @@ input[type=text],
         display: flex;
         flex-wrap: wrap;
         justify-content: space-evenly;
+        margin-top: 20px;
+        position: relative;
     }
 
     .collapsible {
@@ -128,4 +132,12 @@ input[type=text],
         flex-wrap: wrap;
         justify-content: space-evenly;
         transition: max-height 0.2s ease-out;
+    }
+
+    .removeFFBtn {
+        position: absolute;
+        font-size: 22px;
+        top: 5px;
+        right: 10px;
+        color: #5c4c4c;
     }

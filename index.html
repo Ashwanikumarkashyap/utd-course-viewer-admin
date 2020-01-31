@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="style/mystyle.css">
+    <link rel="stylesheet" type="text/css" href="style/formStyle.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 </head>
@@ -13,10 +14,11 @@
     <p id="title" class="title">Courses Offered</p>
 
     <div id="search_block" class="search_block">
-        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for the courses"
+        <input type="text" id="myInput" onkeyup="searchCourse()" placeholder="Search for the courses"
             title="Type the course code">
+        <button class="add_course_btn" id="add_course_btn" onClick="addCoursesForm()"> <i class="fa fa-plus"></i> Add</button>
     </div>
-
+    
     <div id="container" class="container"></div>
 
     <!-- <div id="2" class="filter_div">
@@ -24,10 +26,10 @@
 
                 <div id="course_info_block" class="course_info_block">
                     <div id="course_info" class="course_info">CS1136.002</div>
-                    <i id="course_info_edit_btn_CS1136.002" class="fa fa-edit" onClick="editCourseSeats(this.id)"></i>
+                    <i id="course_info_edit_btn_CS1136.002" class="fa fa-edit" onClick="switchToCourseEditCard(this.id)"></i>
                     
-                    <i id="course_info_cross_btn_CS1136.002" class="fa fa-times" onClick="returnToCourseInfo(this.id)"></i>
-                    <i id="course_info_tick_btn_CS1136.002" class="fa fa-check" onClick="returnToCourseInfo(this.id)"></i>
+                    <i id="course_info_cross_btn_CS1136.002" class="fa fa-times" onClick="returnToCourseInfoCard(this.id)"></i>
+                    <i id="course_info_tick_btn_CS1136.002" class="fa fa-check" onClick="returnToCourseInfoCard(this.id)"></i>
                 </div>
 
                 <div id="seats_edit_CS1136.002" class="seats_edit">
@@ -54,22 +56,11 @@
             </div>
         </div> -->
 
-    <!-- <script type="text/javascript">
-            var clicks = 0;
-
-            function onClick() {
-                clicks += 1;
-                document.getElementById("clicks").innerHTML = clicks;
-            };
-        </script>
-        <button type="button" onClick="onClick()">Click me</button>
-        <p>Clicks: <a id="clicks">0</a></p> -->
-
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-app.js"></script>
 
     <!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#available-libraries -->
+    https://firebase.google.com/docs/web/setup#available-libraries -->
     <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-analytics.js"></script>
 
     <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-database.js"></script>
@@ -89,10 +80,12 @@
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         firebase.analytics();
-        console.log(firebase);
+        // console.log(firebase);
     </script>
-
+    <script src="json/db.js"></script>
+    <script src="script/util.js"></script>
     <script src="script/myscript.js"></script>
+    <script src="script/formScript.js"></script>
 
 </body>
 
