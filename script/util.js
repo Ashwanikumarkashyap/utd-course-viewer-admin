@@ -1,4 +1,4 @@
-function createElemUtil(parent, id_, class_, type, isPrepend) {
+function createElemUtil(parent, id_, class_, type, isPrepend, index) {
     let parent_elem = document.getElementById(parent);
     let elem;
 
@@ -32,7 +32,15 @@ function createElemUtil(parent, id_, class_, type, isPrepend) {
     }
 
     if (parent_elem != undefined) {
-        if (isPrepend) {
+
+        if (index) {
+            var afterChild =  parent_elem.children[index];
+            if (afterChild) {
+                parent_elem.insertBefore(elem, afterChild);
+            } else {
+                parent_elem.append(elem);     
+            }
+        } else if (isPrepend) {
             parent_elem.prepend(elem);    
         } else {
             parent_elem.append(elem);    

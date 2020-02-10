@@ -8,54 +8,38 @@
     <link rel="stylesheet" type="text/css" href="style/formStyle.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/4.4.0/firebase-ui-auth.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.4.0/firebase-ui-auth.css" />
 </head>
 
 <body>
-    <p id="title" class="title">Courses Offered</p>
+    
+    <div id="title_block" class="title_block">
+        <img id ="header_image" class ="header_image" src="assets/utd.png" alt="No image found">
+        <div id="title" class="title">Fetching The Resources..</div>
+        <i id="logout_btn" onClick="logout()" class="fa fa-power-off logout_btn" ></i>
+    </div>
+    
 
     <div id="search_block" class="search_block">
         <input type="text" id="myInput" onkeyup="searchCourse()" placeholder="Search for the courses"
             title="Type the course code">
-        <button class="add_course_btn" id="add_course_btn" onClick="addCoursesForm()"> <i class="fa fa-plus"></i> Add</button>
+        <button class="add_course_btn" id="add_course_btn" onClick="addCoursesForm()"> <i class="fa fa-plus"></i> Add a course</button>
     </div>
     
-    <div id="container" class="container"></div>
+    <div id="container" class="container">
 
-    <!-- <div id="2" class="filter_div">
-            <div id="main_info_CS1136.002" class="main_info">
+        <div id = "course_grid" class="course_grid"></div>
 
-                <div id="course_info_block" class="course_info_block">
-                    <div id="course_info" class="course_info">CS1136.002</div>
-                    <i id="course_info_edit_btn_CS1136.002" class="fa fa-edit" onClick="switchToCourseEditCard(this.id)"></i>
-                    
-                    <i id="course_info_cross_btn_CS1136.002" class="fa fa-times" onClick="returnToCourseInfoCard(this.id)"></i>
-                    <i id="course_info_tick_btn_CS1136.002" class="fa fa-check" onClick="returnToCourseInfoCard(this.id)"></i>
-                </div>
+        <div id="login_block" class="login_block">
+            <img id ="login_image" class ="login_image" src="assets/utd.png" alt="No image found">
+            <div id="firebaseui-auth-container"></div>
+        </div>
+    </div>
 
-                <div id="seats_edit_CS1136.002" class="seats_edit">
-                    <input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                    id="curr_seats_edit_input_CS1136.002" class="curr_seats_edit_input" type="number" maxlength="3">
-                    <p id="seats_edit_sep_CS1136.002" class="seats_edit_sep">/</p>
-                    <input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                    id="total_seats_edit_input_CS1136.002" class="total_seats_edit_input" type="number" maxlength="3" name="quantity">
-                </div>
-
-                <div id="seats_CS1136.002" class="seats">
-                    <p id="curr_seats_CS1136.002" class="curr_seats"> 26</p>
-                    <p id="total_seats_CS1136.002" class="total_seats">/67</p>
-                </div>
-
-                <div id="course_btn_CS1136.002" class="course_btn">
-                    <button class="dec_btn" type="button" onClick="onClick()">
-                        <i class="fa fa-angle-down"></i>
-                    </button>
-                    <button class="inc_btn" type="button" onClick="onClick()">
-                        <i class="fa fa-angle-up"></i>
-                    </button>
-                </div>
-            </div>
-        </div> -->
-
+    <!-- <script src="https://www.gstatic.com/firebasejs/ui/4.4.0/firebase-ui-auth__en.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.4.0/firebase-ui-auth.css" /> -->
+    
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-app.js"></script>
 
@@ -64,6 +48,7 @@
     <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-analytics.js"></script>
 
     <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.6.0/firebase-auth.js"></script>
 
     <script>
         // Your web app's Firebase configuration
@@ -82,6 +67,7 @@
         firebase.analytics();
         // console.log(firebase);
     </script>
+    <script src="script/auth.js"></script>
     <script src="json/db.js"></script>
     <script src="script/util.js"></script>
     <script src="script/myscript.js"></script>

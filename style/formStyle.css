@@ -21,28 +21,35 @@ input[type=text],
         -moz-appearance:textfield;
     }
 
-    form {
+    .courses_form {
+        width: 70%;
         display: flex;
         flex-wrap: wrap;
         justify-content: space-evenly;
         padding: 20px;
-        background: #bc9e85c4;
-        border-radius: 13px;
+        margin-bottom: 20px;
+        margin-top: 20px;
+        background: #e7dbdb;
+        box-shadow: 0px 0px 16px 1px #000000;
     }
 
-    input[type=submit] {
+    .course_submit {
         width: 100%;
-        background-color: #4CAF50;
+        background-color: #374537;
         color: white;
         padding: 14px 20px;
         margin: 8px 0;
         border: none;
         border-radius: 4px;
         cursor: pointer;
+        box-shadow: 0px 1px 6px 0px #000000;
+        border: 2px solid;
+        transition-duration: 0.4s;
     }
 
     input[type=submit]:hover {
-        background-color: #45a049;
+        background-color: #454b45;
+        box-shadow: none;
     }
 
     .form_wrapper {
@@ -86,6 +93,8 @@ input[type=text],
         display: flex;
         width: 15em;
         flex-direction: column;
+        color: white;
+        margin: 0 10px;
     }
 
     label {
@@ -98,7 +107,7 @@ input[type=text],
 
     .course_input {
         border-radius: 5px;
-        background-color: #f2f2f2;
+        background-color: #568356;;
         padding: 1em;
         display: flex;
         flex-wrap: wrap;
@@ -108,27 +117,32 @@ input[type=text],
     }
 
     .collapsible {
-        background-color: #777;
+        background-color: #ce803e;
         color: white;
         cursor: pointer;
         padding: 10px;
         width: 100%;
         border: none;
+        box-shadow: 0px 1px 6px 0px #000000;
         text-align: center;
         outline: none;
         font-size: 15px;
+        margin: 5px;
+        transition-duration: 0.2s;
     }
 
     .active,
     .collapsible:hover {
-        background-color: #555;
+        box-shadow: none;
+        background-color: #464646;
     }
 
     .content {
         padding: 10px;
+        background: #bc8848;
+        color: white;
         display: none;
         overflow: hidden;
-        background-color: #c0bcbc;
         flex-wrap: wrap;
         justify-content: space-evenly;
         transition: max-height 0.2s ease-out;
@@ -139,5 +153,5 @@ input[type=text],
         font-size: 22px;
         top: 5px;
         right: 10px;
-        color: #5c4c4c;
+        color: #ffffff;
     }

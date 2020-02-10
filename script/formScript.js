@@ -25,24 +25,24 @@ function addCoursesForm() {
 }
 
 function addCourseField(formWrapper) {
-    courseInput = createElemUtil(formWrapper.id, "course_input_" + formIndex, "course_input", "div");
-    var crossBtn = createElemUtil(courseInput.id, "course_info_cross_btn_" + formIndex, "fa", "i");
+    courseInput = createElemUtil(formWrapper.id, "course_input:" + formIndex, "course_input", "div");
+    var crossBtn = createElemUtil(courseInput.id, "course_info_cross_btn:" + formIndex, "fa", "i");
     crossBtn.classList.add("fa-times");
     crossBtn.classList.add("removeFFBtn");
     crossBtn.setAttribute("onClick", "removeFormField(this.id)");
-    ccFormInputBlock = createElemUtil(courseInput.id, "ccode_input_block_" + formIndex, "form_input_block", "div");
-    ccodeLabel = createElemUtil(ccFormInputBlock.id, "ccode_label_" + formIndex, "form_input_label", "label");
+    ccFormInputBlock = createElemUtil(courseInput.id, "ccode_input_block:" + formIndex, "form_input_block", "div");
+    ccodeLabel = createElemUtil(ccFormInputBlock.id, "ccode_label:" + formIndex, "form_input_label", "label");
     ccodeLabel.innerHTML = "Course Code";
-    ccodeInput = createElemUtil(ccFormInputBlock.id, "ccode_input_" + formIndex, "form_input", "input");
+    ccodeInput = createElemUtil(ccFormInputBlock.id, "ccode_input:" + formIndex, "form_input", "input");
     ccodeInput.type = "text";
     ccodeInput.setAttribute("maxLength", "20");
     ccodeInput.required = true;
     ccodeInput.placeholder = "Course code";
 
-    tseatsFormInputBlock = createElemUtil(courseInput.id, "tseats_input_block_"+ formIndex, "form_input_block", "div");
-    tseatsLabel = createElemUtil(tseatsFormInputBlock.id, "tseats_label_" + formIndex, "form_input_label", "label");
+    tseatsFormInputBlock = createElemUtil(courseInput.id, "tseats_input_block:"+ formIndex, "form_input_block", "div");
+    tseatsLabel = createElemUtil(tseatsFormInputBlock.id, "tseats_label:" + formIndex, "form_input_label", "label");
     tseatsLabel.innerHTML = "Total Seats";
-    tseatsInput = createElemUtil(tseatsFormInputBlock.id, "tseats_input_" + formIndex, "form_input", "input");
+    tseatsInput = createElemUtil(tseatsFormInputBlock.id, "tseats_input:" + formIndex, "form_input", "input");
     tseatsInput.classList.add("form_input_number");
     tseatsInput.setAttribute("maxLength", "3");
     tseatsInput.setAttribute("type", "number");
@@ -50,49 +50,46 @@ function addCourseField(formWrapper) {
     tseatsInput.required = true;
     tseatsInput.placeholder = "Total seats";
 
-    cseatsFormInputBlock = createElemUtil(courseInput.id, "cseats_input_block_"+ formIndex, "form_input_block", "div");
-    cseatsLabel = createElemUtil(cseatsFormInputBlock.id, "cseats_label_" + formIndex, "form_input_label", "label");
-    cseatsLabel.innerHTML = "Current Availbale Seats";
-    cseatsInput = createElemUtil(cseatsFormInputBlock.id, "cseats_input_" + formIndex, "form_input", "input");
-    cseatsInput.classList.add("form_input_number");
-    cseatsInput.setAttribute("maxLength", "3");
-    cseatsInput.setAttribute("type", "number");
-    cseatsInput.setAttribute("oninput", "javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);");
-    cseatsInput.required = true;
-    cseatsInput.placeholder = "Current seats";
-
-    colBtn = createElemUtil(courseInput.id, "col_btn" + formIndex, "collapsible", "button");
+    colBtn = createElemUtil(courseInput.id, "col_btn:" + formIndex, "collapsible", "button");
     colBtn.setAttribute("onClick", "toggleMoreDetails(this.id)");
     colBtn.type = "button";
     colBtn.innerHTML = "Add More Details";
     
-    colBtnCntnt = createElemUtil(courseInput.id, "col_btn_cntnt" + formIndex, "content", "div");
+    colBtnCntnt = createElemUtil(courseInput.id, "col_btn_cntnt:" + formIndex, "content", "div");
 
-    cnameFormInputBlock = createElemUtil(colBtnCntnt.id, "cname_input_block_"+ formIndex, "form_input_block", "div");
-    cnameLabel = createElemUtil(cnameFormInputBlock.id, "cname_label_" + formIndex, "form_input_label", "label");
+    cnameFormInputBlock = createElemUtil(colBtnCntnt.id, "cname_input_block:"+ formIndex, "form_input_block", "div");
+    cnameLabel = createElemUtil(cnameFormInputBlock.id, "cname_label:" + formIndex, "form_input_label", "label");
     cnameLabel.innerHTML = "Course Name";
-    cnameInput = createElemUtil(cnameFormInputBlock.id, "cname_input_" + formIndex, "form_input", "input");
+    cnameInput = createElemUtil(cnameFormInputBlock.id, "cname_input:" + formIndex, "form_input", "input");
     cnameInput.type = "text";
     cnameInput.placeholder = "Course name";
     cnameInput.maxlength = "50";
 
-    inameFormInputBlock = createElemUtil(colBtnCntnt.id, "iname_input_block_"+ formIndex, "form_input_block", "div");
-    inameLabel = createElemUtil(inameFormInputBlock.id, "iname_label_" + formIndex, "form_input_label", "label");
+    inameFormInputBlock = createElemUtil(colBtnCntnt.id, "iname_input_block:"+ formIndex, "form_input_block", "div");
+    inameLabel = createElemUtil(inameFormInputBlock.id, "iname_label:" + formIndex, "form_input_label", "label");
     inameLabel.innerHTML = "Instructer Name";
-    inameInput = createElemUtil(inameFormInputBlock.id, "iname_input_" + formIndex, "form_input", "input");
+    inameInput = createElemUtil(inameFormInputBlock.id, "iname_input:" + formIndex, "form_input", "input");
     inameInput.type = "text";
     inameInput.placeholder = "Instructer";
     inameInput.maxlength = "50";
+
+    locationFormInputBlock = createElemUtil(colBtnCntnt.id, "location_input_block:"+ formIndex, "form_input_block", "div");
+    locationLabel = createElemUtil(locationFormInputBlock.id, "location_label:" + formIndex, "form_input_label", "label");
+    locationLabel.innerHTML = "Location";
+    locationInput = createElemUtil(locationFormInputBlock.id, "location_input:" + formIndex, "form_input", "input");
+    locationInput.type = "text";
+    locationInput.placeholder = "Location";
+    locationInput.maxlength = "50";
     
-    scheduleForm = createElemUtil(colBtnCntnt.id, "schedule_form_"+ formIndex, "schedule_form", "div");
+    scheduleForm = createElemUtil(colBtnCntnt.id, "schedule_form:"+ formIndex, "schedule_form", "div");
 
     let days = ["M", "T", "W", "TH", "F", "S"];
     for (var i =0 ;i <days.length ; i++) {
-        scheduleInputBlock = createElemUtil(scheduleForm.id, "schedule_input_block_"+ days[i] + "_" + formIndex, "schedule_input_block", "div");
-        dayInputBlock = createElemUtil(scheduleInputBlock.id, "day_input_block_"+ days[i] + "_" + formIndex, "day_input_block", "div");
-        createElemUtil(dayInputBlock.id, "day_input_txt"+ days[i] + "_" + formIndex, "day_input_txt", "p").innerHTML = days[i];
-        createElemUtil(dayInputBlock.id, "day_input"+ days[i] + "_" + formIndex, "day_input", "input").type = "checkbox";
-        dayTimeInput = createElemUtil(scheduleInputBlock.id, "day_time_input_"+ days[i] + "_" + formIndex, "day_time_input", "input");
+        scheduleInputBlock = createElemUtil(scheduleForm.id, "schedule_input_block_"+ days[i] + ":" + formIndex, "schedule_input_block", "div");
+        dayInputBlock = createElemUtil(scheduleInputBlock.id, "day_input_block_"+ days[i] + ":" + formIndex, "day_input_block", "div");
+        createElemUtil(dayInputBlock.id, "day_input_txt"+ days[i] + ":" + formIndex, "day_input_txt", "p").innerHTML = days[i];
+        createElemUtil(dayInputBlock.id, "day_input"+ days[i] + ":" + formIndex, "day_input", "input").type = "checkbox";
+        dayTimeInput = createElemUtil(scheduleInputBlock.id, "day_time_input_"+ days[i] + ":" + formIndex, "day_time_input", "input");
         dayTimeInput.type = "text";
         dayTimeInput.setAttribute("placeholder", "HHMM-HHMM");
         dayTimeInput.setAttribute("maxlength", "9");
@@ -102,9 +99,9 @@ function addCourseField(formWrapper) {
 }
 
 function removeFormField(id) {
-    var idArr = id.split("_");
+    var idArr = id.split(":");
     var fieldIdx = idArr[idArr.length-1];
-    var currSeatElem = document.getElementById("course_input_"+fieldIdx);
+    var currSeatElem = document.getElementById("course_input:"+fieldIdx);
     $(currSeatElem).remove();
 
     let coursesInputs = document.getElementsByClassName("course_input");
@@ -123,9 +120,32 @@ function submitCourseForm() {
         var updates = {};
         updates['/program_01/courses/' + newPostKey] = courses[i];
 
-        ref.update(updates);
+        (function update(index) {
+            ref.update(updates).then(()=> {
+                // successfully added to the server
+                
+                
+                
+                // update the local database
+                program.courses[newPostKey] = courses[index];
+
+                var insertIndex = findCoursesInArr(sortedCourses, 'code', courses[index].code, true);
+                
+                insertIndex = -1*(insertIndex);
+                var obj = JSON.parse(JSON.stringify(courses[index]));
+                obj.id = newPostKey;
+                sortedCourses.splice(insertIndex, 0, obj);
+                
+                createCourseGrid(sortedCourses);
+                removeFormField("course_input:" + index);
+            }).catch(error => {
+                console.log(error)
+                if (error.code == "PERMISSION_DENIED") {
+                    alert("Current user is not allowed to modify the data.");
+                }
+            });
+        })(i);
     }
-    
 }
 
 function fetchFormInfo() {
@@ -137,16 +157,24 @@ function fetchFormInfo() {
 
         var course = {};
 
-        var courseCode = document.getElementById("ccode_input_" + i).value.toUpperCase();
-        var totalSeats = document.getElementById("tseats_input_" + i).value;
-        var currSeats = document.getElementById("cseats_input_" + i).value;
+        var courseCode = document.getElementById("ccode_input:" + i).value.toUpperCase();
+        var totalSeats = parseInt(document.getElementById("tseats_input:" + i).value);
+        var currSeats = totalSeats;
+        
 
         course.code = courseCode;
         course.totalSeats = totalSeats;
         course.currSeats = currSeats;
 
-        var cname = document.getElementById("cname_input_" + i).value;
-        var iname = document.getElementById("iname_input_" + i).value;
+        var cname = document.getElementById("cname_input:" + i).value;
+        var iname = document.getElementById("iname_input:" + i).value;
+        var location = document.getElementById("location_input:" + i).value;
+
+        if (location.length>0) {
+            course.location = location;
+        } else {
+            course.location = "NA";
+        }
 
         if (cname.length>0) {
             course.name = cname;
@@ -162,31 +190,30 @@ function fetchFormInfo() {
 
         var days = {};
 
-        var MInput = document.getElementById("day_time_input_M_" + i).value;
+        var MInput = document.getElementById("day_time_input_M:" + i).value;
         if (MInput.length>0) {
             days.monday = MInput;
         }
-        var TInput = document.getElementById("day_time_input_T_" + i).value;
+        var TInput = document.getElementById("day_time_input_T:" + i).value;
         if (TInput) {
             days.tuesday = TInput;
         }
-        var WInput = document.getElementById("day_time_input_W_" + i).value;
+        var WInput = document.getElementById("day_time_input_W:" + i).value;
         if (WInput) {
             days.wednesday = WInput;
         }
-        var ThInput = document.getElementById("day_time_input_TH_" + i).value;
+        var ThInput = document.getElementById("day_time_input_TH:" + i).value;
         if (ThInput) {
             days.thursday = ThInput;
         }
-        var FInput = document.getElementById("day_time_input_F_" + i).value;
+        var FInput = document.getElementById("day_time_input_F:" + i).value;
         if (FInput) {
             days.friday = FInput;
         }
-        var SInput = document.getElementById("day_time_input_S_" + i).value;
-        if (document.getElementById("day_time_input_S_" + i).value) {
+        var SInput = document.getElementById("day_time_input_S:" + i).value;
+        if (SInput) {
             days.saturday = SInput;
         }
-
         course.days = days;
 
         courses.push(course);
