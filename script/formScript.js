@@ -115,36 +115,21 @@ function submitCourseForm() {
     var courses = fetchFormInfo();
 
     for (var i=0; i <courses.length;i++) {
-        var newPostKey = ref.child('program_01').child('courses').push().key;
+        addCourse(courses[i], i, (newPostKey, index) => {
+            
+            // update the local database
+            program.courses[newPostKey] = courses[index];
+            var insertIndex = findCoursesInArr(sortedCourses, 'code', courses[index].code, true);
+            insertIndex = -1*(insertIndex);
+            var obj = JSON.parse(JSON.stringify(courses[index]));
+            obj.id = newPostKey;
+            sortedCourses.splice(insertIndex, 0, obj);
+            
 
-        var updates = {};
-        updates['/program_01/courses/' + newPostKey] = courses[i];
-
-        (function update(index) {
-            ref.update(updates).then(()=> {
-                // successfully added to the server
-                
-                
-                
-                // update the local database
-                program.courses[newPostKey] = courses[index];
-
-                var insertIndex = findCoursesInArr(sortedCourses, 'code', courses[index].code, true);
-                
-                insertIndex = -1*(insertIndex);
-                var obj = JSON.parse(JSON.stringify(courses[index]));
-                obj.id = newPostKey;
-                sortedCourses.splice(insertIndex, 0, obj);
-                
-                createCourseGrid(sortedCourses);
-                removeFormField("course_input:" + index);
-            }).catch(error => {
-                console.log(error)
-                if (error.code == "PERMISSION_DENIED") {
-                    alert("Current user is not allowed to modify the data.");
-                }
-            });
-        })(i);
+            // update the UI
+            createCourseGrid(sortedCourses);
+            removeFormField("course_input:" + index);
+        });
     }
 }
 

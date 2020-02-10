@@ -51,3 +51,31 @@ function createElemUtil(parent, id_, class_, type, isPrepend, index) {
     elem.classList.add(class_);
     return elem;
 }
+
+function sortCourses(program_) {
+    
+    var sortedCourses_ = [];
+
+    for (let [key, value] of Object.entries(program_.courses)) {
+        var obj = JSON.parse(JSON.stringify(value));
+        obj.id = key;
+        sortedCourses_.push(obj);
+    }
+
+    sortedCourses_.sort(function(a, b) {
+        return a.code.localeCompare(b.code);
+    });
+
+    return sortedCourses_;
+}
+
+function findCoursesInArr(array, attr, value, isInsertion) {    
+    for(var i = 0; i < array.length; i ++) {
+        if(array[i][attr].localeCompare(value)==0) {
+            return i;
+        } else if(isInsertion && array[i][attr].localeCompare(value)>0) {
+            return -1*i;
+        }
+    }
+    return -1*array.length;
+}

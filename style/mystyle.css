@@ -7,7 +7,6 @@
         text-align: center;        
         background: linear-gradient(110deg, #f6a43f 900px, #e1ebe5 176px);
         margin: 0;
-        /* height: 100vh; */
     }
     
     .title_block  {
@@ -20,7 +19,6 @@
         height: 54px;
         -webkit-box-shadow: 1px 2px 12px 2px black;
         -moz-box-shadow: 1px 2px 12px 2px black;
-        /* box-shadow: 1px 2px 18px 2px black; */
         box-shadow: 1px 2px 12px 2px black;
         display: flex;
         justify-content: center;
@@ -39,11 +37,9 @@
     .container {
         padding: 0px 20px;
         text-align: -webkit-center;
-        /* height: 100%; */
     }
 
     .course_grid {
-        /* display: flex; */
         flex-flow: wrap;
         justify-content: center;
         display: none;
@@ -54,7 +50,6 @@
         background-repeat: no-repeat;
         font-size: 16px;
         width: 70%;
-        /* padding: 12px 20px 12px 40px; */
         border: 5px dashed #413838;
         margin: 6px;
     }
@@ -106,7 +101,6 @@
         text-align: center;
         margin-left: 1em;
         font-size: 1.5em;
-        /* border-radius: 35px; */
         color: white;
         cursor: pointer;
         background: #4a83ac;
