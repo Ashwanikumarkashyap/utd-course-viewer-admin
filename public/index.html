@@ -3,6 +3,7 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/png" href="favicon.png"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="style/mystyle.css">
     <link rel="stylesheet" type="text/css" href="style/formStyle.css">
@@ -16,63 +17,70 @@
     
     <div id="title_block" class="title_block">
         <img id ="header_image" class ="header_image" src="assets/utd.png" alt="No image found">
-        <div id="title" class="title">Fetching The Resources..</div>
+        <div id="title" class="title">Fetching the resources..</div>
         <i id="logout_btn" onClick="logout()" class="fa fa-power-off logout_btn" ></i>
     </div>
-    
-
     <div id="search_block" class="search_block">
-        <input type="text" id="myInput" onkeyup="searchCourse()" placeholder="Search for the courses"
+        <input type="text" id="searchField" class= "searchField" onkeyup="searchCourse()" placeholder="Search for the courses"
             title="Type the course code">
         <button class="add_course_btn" id="add_course_btn" onClick="addCoursesForm()"> <i class="fa fa-plus"></i> Add a course</button>
     </div>
     
+    
     <div id="container" class="container">
-
         <div id = "course_grid" class="course_grid"></div>
 
-        <div id="login_block" class="login_block">
-            <img id ="login_image" class ="login_image" src="assets/utd.png" alt="No image found">
-            <div id="firebaseui-auth-container"></div>
+        
+        <div id="login_block_wrapper" class="login_block_wrapper">
+            <div id="login_block" class="login_block">
+                <img id ="login_image" class ="login_image" src="assets/utd.png" alt="No image found">
+                <div id="firebaseui-auth-container"></div>
+            </div>
         </div>
     </div>
 
-    <!-- <script src="https://www.gstatic.com/firebasejs/ui/4.4.0/firebase-ui-auth__en.js"></script>
-    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.4.0/firebase-ui-auth.css" /> -->
+    <footer id="footer" class="footer">
+        <div id="footer_text" class="footer_text">
+            Department of Computer Science and Engineering
+        </div>
+    </footer>
+
     
     <!-- The core Firebase JS SDK is always required and must be listed first -->
-    <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-app.js"></script>
 
     <!-- TODO: Add SDKs for Firebase products that you want to use
-    https://firebase.google.com/docs/web/setup#available-libraries -->
-    <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-analytics.js"></script>
-
-    <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-database.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.6.0/firebase-auth.js"></script>
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-analytics.js"></script>
 
     <script>
         // Your web app's Firebase configuration
         var firebaseConfig = {
-            apiKey: "AIzaSyBzgvDmmNRCK9-qRLiYM7lepmeSV4x8fWM",
-            authDomain: "courses-8eec7.firebaseapp.com",
-            databaseURL: "https://courses-8eec7.firebaseio.com",
-            projectId: "courses-8eec7",
-            storageBucket: "courses-8eec7.appspot.com",
-            messagingSenderId: "271497755267",
-            appId: "1:271497755267:web:7c2c33c077e910f9df39b6",
-            measurementId: "G-H1CSPQC02J"
+            apiKey: "AIzaSyAfOm7LmnqJglj5jUWu158kFBs6TtBA0kA",
+            authDomain: "utdcourseviewer.firebaseapp.com",
+            databaseURL: "https://utdcourseviewer.firebaseio.com",
+            projectId: "utdcourseviewer",
+            storageBucket: "utdcourseviewer.appspot.com",
+            messagingSenderId: "820090869396",
+            appId: "1:820090869396:web:a3348156908c86a620c681",
+            measurementId: "G-G8C7B0T24E"
         };
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         firebase.analytics();
-        // console.log(firebase);
+    </script>
+
+    <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-database.js"></script>
+
+
     </script>
     <script src="script/auth.js"></script>
     <script src="script/services.js"></script>
-    <script src="json/db.js"></script>
     <script src="script/util.js"></script>
     <script src="script/myscript.js"></script>
     <script src="script/formScript.js"></script>
+    <script src="script/listeners.js"></script>
 
 </body>
 

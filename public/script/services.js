@@ -1,13 +1,5 @@
-const ref = firebase.database().ref();
-
-let program;
+let program = null;
 let sortedCourses = []
-
-ref.child('program_01').once("value", snap => {
-    program = snap.val();
-    sortedCourses = sortCourses(program)
-    createCourseGrid(sortedCourses);
-});
 
 function addCourse(course, index, callback) {
     var newPostKey = ref.child('program_01').child('courses').push().key;
@@ -16,7 +8,9 @@ function addCourse(course, index, callback) {
     updates['/program_01/courses/' + newPostKey] = course;
 
     ref.update(updates).then(()=> {
-        callback(newPostKey, index);
+        if (callback) {
+            callback(index);
+        }
     }).catch(error => {
         console.log(error);
         if (error.code == "PERMISSION_DENIED") {
@@ -37,9 +31,6 @@ function updateSeats(courseCode, currSeatsInc, totalSeatsInc, callback, isRegist
         }
         return course;
     }, function(error, committed, snapshot) {
-        if (callback && snapshot) {
-            callback(snapshot.key, snapshot.val());
-        }
         if (error) {
             console.log('Transaction failed abnormally!', error);
             if (error.message == "permission_denied") {
@@ -48,14 +39,18 @@ function updateSeats(courseCode, currSeatsInc, totalSeatsInc, callback, isRegist
                 alert("Seats update failed and aborted.");
             }
         } else if (!committed && isRegistration) {
-            alert("Reservation aborted, all seats went full and the current reservation could not be made.");
+            // reservation aborted, all seats went full and the current reservation could not be made.
         } else {
+            // update the reg count with final callback
+            if (callback) {
+                callback(currSeatsInc);
+            }
             if (isRegistration && currSeatsInc<0) {
-                alert("One seat is successfully 'reserved' for the course " +  snapshot.val().code + ".");
+                // one seat is successfully 'reserved' for the course.
             } else if (isRegistration && currSeatsInc>0) {
-                alert("One seat is successfully 'vacated' for the course " +  snapshot.val().code + ".");
+                // one seat is successfully 'vacated' for the course.
             } else {
-                alert("Seats successfully updated.");
+                // seats successfully updated.
             }
         }
     });
@@ -63,7 +58,9 @@ function updateSeats(courseCode, currSeatsInc, totalSeatsInc, callback, isRegist
 
 function deleteCourse(courseCode, callback) {
     ref.child('program_01').child('courses/' + courseCode).remove().then(() => {
-        callback(courseCode);
+        if (callback) {
+            callback(courseCode);
+        }
     }).catch(error => {
         console.log(error);
         if (error.code == "PERMISSION_DENIED") {
@@ -72,8 +69,9 @@ function deleteCourse(courseCode, callback) {
     });
 }
 
-function updateRegCount(regCountIncrement, callback) {
+function updateRegCount(regCountIncrement, isRegistration, callback) {
     let registrationCountRef = ref.child('program_01').child('registrationCount');
+    
     registrationCountRef.transaction(regCount =>  {
         if (regCount!=null) {
             if (regCount==0 && regCountIncrement<0) {
@@ -84,14 +82,23 @@ function updateRegCount(regCountIncrement, callback) {
         return regCount;
     }, function(error, committed, snapshot) {
         if (callback  && snapshot) {
-            callback(snapshot.key, snapshot.val());
-        }
-        if (error) {
+            callback();
+        } if (error) {
             console.log('Transaction failed abnormally!', error);
         } else if (!committed) {
-            console.log('Transaction aborted');
+            if (isRegistration) {
+                alert("Reservation aborted, all seats went full and the current reservation could not be made.");
+            } else {
+                alert("Seats update aborted, operation failed.");
+            }
         } else {
-            // successfully updated
+            if (isRegistration && regCountIncrement>0) {
+                alert("One seat is successfully 'reserved' for the course " +  snapshot.val().code + ".");
+            } else if (isRegistration && regCountIncrement<0) {
+                alert("One seat is successfully 'vacated' for the course " +  snapshot.val().code + ".");
+            } else {
+                alert("Seats successfully updated.");
+            }
         }
     });
 }

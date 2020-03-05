@@ -1,5 +1,5 @@
 function searchCourse() {
-    let input = document.getElementById("myInput").value.toUpperCase().trim();
+    let input = document.getElementById("searchField").value.toUpperCase().trim();
     filterCourseGrid(input);
 }
 
@@ -15,18 +15,24 @@ function createCourseGrid(courses) {
         var courseContainer = document.getElementById(courses[i].id);
 
         if (!courseContainer) {
+
             courseContainer = createElemUtil(courseGrid.id, courses[i].id, "filter_div", "div", false, i);
 
             var main_info = createElemUtil(courseContainer.id, "main_info:" + courses[i].id, "main_info", "div");
-
             var course_info_block = createElemUtil(main_info.id, "course_info_block:" + courses[i].id, "course_info_block", "div");
-            
+
             var courseInfo = createElemUtil(course_info_block.id, "course_info:" + courses[i].id, "course_info", "div");
             courseInfo.innerHTML = courses[i].code;
-            
+            courseInfo.title = courses[i].code;
+
+            //create buttons
             var editBtn = createElemUtil(course_info_block.id, "course_info_edit_btn:" + courses[i].id, "fa", "i");
             editBtn.classList.add("fa-edit");
             editBtn.setAttribute("onClick", "switchToCourseEditCard(this.id)");
+
+            var moreInfoBtn = createElemUtil(course_info_block.id, "course_info_moreInfo_btn:" + courses[i].id, "fa", "i");
+            moreInfoBtn.classList.add("fa-info");
+            moreInfoBtn.setAttribute("onClick", "switchToCourseMoreInfoCard(this.id)");
 
             var crossBtn = createElemUtil(course_info_block.id, "course_info_cross_btn:" + courses[i].id, "fa", "i");
             crossBtn.classList.add("fa-times");
@@ -41,6 +47,7 @@ function createCourseGrid(courses) {
             delBtn.classList.add("fa-trash");
             delBtn.setAttribute("onClick", "removeCourse(this.id)");
 
+            // create seat edit view
             var seats_edit = createElemUtil(main_info.id, "seats_edit:" + courses[i].id, "seats_edit", "div");
             
             var curr_seats_edit_input = createElemUtil(seats_edit.id, "curr_seats_edit_input:" + courses[i].id, "curr_seats_edit_input", "input");
@@ -63,6 +70,7 @@ function createCourseGrid(courses) {
             var total_seats = createElemUtil(seats.id, "total_seats:" + courses[i].id, "total_seats", "p");
             total_seats.innerHTML = "/" + courses[i].totalSeats;
 
+            // create seat edit view button
             var courseBtn = createElemUtil(main_info.id, "course_btn:" + courses[i].id, "course_btn", "div");
 
             var decBtn = createElemUtil(courseBtn.id, "dec_btn:" + courses[i].id, "dec_btn", "button");
@@ -74,10 +82,61 @@ function createCourseGrid(courses) {
             incBtn.setAttribute("onClick", "updateCourseSeatsHandler(this.id)");
             var incBtnIcon = createElemUtil(incBtn.id, "inc_btn_icon:" + courses[i].id, "fa", "i");
             incBtnIcon.classList.add("fa-angle-up");
+
+
+            // create more info view
+            var more_info = createElemUtil(courseContainer.id, "more_info:" + courses[i].id, "more_info", "div");
             
+            var cname = createElemUtil(more_info.id, "cname:" + courses[i].id, "cname", "div");
+            if (courses[i].name=="NA") {
+                cname.innerHTML = "Course name: NA";
+            } else {
+                cname.innerHTML = courses[i].name;
+                cname.title = courses[i].name;
+            }
+        
+            var iname = createElemUtil(more_info.id, "iname:" + courses[i].id, "iname", "div");
+            if (courses[i].iname=="NA") {
+                iname.innerHTML = "Instructer: NA";
+            } else {
+                iname.innerHTML = courses[i].iname;
+                iname.title = courses[i].iname;
+            }
+
+            var time_loc = createElemUtil(more_info.id, "time_loc:" + courses[i].id, "time_loc", "div");
+            var daysLocString = "";
+            var isAdded = false;
+            if (courses[i].days) {
+                for (let [key] of Object.entries(courses[i].days)) {
+                    isAdded = true;
+                    daysLocString += key.toUpperCase() + "";
+                }
+            }
+            if (isAdded) {
+                daysLocString += " " + courses[i].days[Object.keys(courses[i].days)[0]] + " | "
+            }
+            if (courses[i].location == "NA") {
+                daysLocString += "Location: NA"    
+            } else {
+                daysLocString += courses[i].location;
+            }
+            time_loc.innerHTML = daysLocString;
+            time_loc.title = daysLocString;
+
+            // create more info view button
+            var crossBtn = createElemUtil(more_info.id, "course_info_cross_btn:" + courses[i].id, "fa", "i");
+            crossBtn.classList.add("fa-times");
+            crossBtn.classList.add("removeFFBtn");
+            crossBtn.setAttribute("onClick", "showCourseInfoCard(this.id)");
+
         } else {
             document.getElementById("curr_seats:"+ courses[i].id).innerHTML = courses[i].currSeats;
             document.getElementById("total_seats:" + courses[i].id).innerHTML = "/" + courses[i].totalSeats;
+            
+            var currInputFeild = document.getElementById("curr_seats_edit_input:" + courses[i].id);
+            var totalInputFeild = document.getElementById("total_seats_edit_input:" + courses[i].id);
+            currInputFeild.value = courses[i].currSeats;
+            totalInputFeild.value = courses[i].totalSeats;
         }
     }
 }
@@ -85,7 +144,10 @@ function createCourseGrid(courses) {
 function filterCourseGrid(SearchKey) {
     let courses = program.courses;
     for (let [key, value] of Object.entries(courses)) {
-        if (key.length != 0 && (value.code.toString()).indexOf(SearchKey) == -1) {
+        if (key.length != 0 && ((value.code.toString().toUpperCase()).indexOf(SearchKey) <= -1
+            && (value.location.toString().toUpperCase()).indexOf(SearchKey) <= -1
+            && (value.name.toString().toUpperCase()).indexOf(SearchKey) <= -1
+            && (value.iname.toString().toUpperCase()).indexOf(SearchKey) <= -1)) {
             document.getElementById(key).style.display = "none";
         } else {
             document.getElementById(key).style.display = "flex";
@@ -101,17 +163,9 @@ function removeCourse(id) {
     var approved = confirm("Are you sure you want to delete the course \n" + program.courses[courseCode].code);
     
     if (approved) {
-
-        deleteCourse(courseCode, (courseCode) => {
-         
-            // update the database
-             delete program.courses[courseCode];
-             var index = findCoursesInArr(sortedCourses, 'id', courseCode, false);
-             if (index>=0) {
-                 sortedCourses.splice(index,1);
-             }
-             // update the UI
-             $("#"+courseCode).remove();
+        deleteCourse(courseCode, (courseCode_) => {
+            // update ref count
+            updateRegCount(-(program.courses[courseCode_].totalSeats-program.courses[courseCode_].currSeats), false);
         });
     }
 
@@ -131,31 +185,15 @@ function updateCourseSeatsHandler(id) {
     var approved = confirm("Are you sure you want to update the seats for the following course \n" + program.courses[courseCode].code);
     if (approved) {
         if (currSeatCount!=0 && idArr[0].indexOf("dec")>=0) {
-            updateSeats(courseCode, -1, 0, updateLocalSeats_UI_callback, true);
-            updateRegCount(1, updateLocalRegCount_callback);
+            updateSeats(courseCode, -1, 0, updateRegCountCallback, true);
         } else if (currSeatCount<totalSeatCount && idArr[0].indexOf("inc")>=0) {
-            updateSeats(courseCode, 1, 0, updateLocalSeats_UI_callback, true);
-            updateRegCount(-1, updateLocalRegCount_callback);
+            updateSeats(courseCode, 1, 0, updateRegCountCallback, true);
         } 
 
-        function updateLocalSeats_UI_callback(courseCode, course) {
-            var index = findCoursesInArr(sortedCourses, 'id', courseCode, false);
-            if (index>=0) {
-                sortedCourses[index].currSeats = course.currSeats;
-                sortedCourses[index].totalSeats = course.totalSeats;
-            }
-            program.courses[courseCode].currSeats = course.currSeats;
-            program.courses[courseCode].totalSeats = course.totalSeats;
-
-            // update the UI
-            document.getElementById("curr_seats:"+ courseCode).innerHTML = course.currSeats;
-            document.getElementById("total_seats:" + courseCode).innerHTML = "/" + course.totalSeats;
-
+        function updateRegCountCallback(increment) {
+            updateRegCount(-1*increment, true);
         }
 
-        function updateLocalRegCount_callback(regCount) {
-            program.registrationCount = regCount;
-        }
     }
 }
 
@@ -173,6 +211,7 @@ function switchToCourseEditCard (id){
 
 
     document.getElementById("course_info_edit_btn:" + courseCode).style.display = "none";
+    document.getElementById("course_info_moreInfo_btn:" + courseCode).style.display = "none";
 
     document.getElementById("course_info_cross_btn:" + courseCode).style.display = "inline-flex";
     document.getElementById("course_info_tick_btn:" + courseCode).style.display = "inline-flex";
@@ -213,56 +252,51 @@ function switchToCourseInfoCard(id) {
         if (approved) {
             if (prevCurrCount <= currSeats) {
                 if (prevTotalCount <= totalSeats) {
-                    updateSeats(courseCode, currSeats-prevCurrCount, totalSeats-prevTotalCount, updateLocalSeats_UI_callback, false)
+                    updateSeats(courseCode, currSeats-prevCurrCount, totalSeats-prevTotalCount, updateRegCountCallback, false)
                 } else if (prevTotalCount > totalSeats) {
-                    updateSeats(courseCode, currSeats-prevCurrCount, -(prevTotalCount-totalSeats), updateLocalSeats_UI_callback,false)
+                    updateSeats(courseCode, currSeats-prevCurrCount, -(prevTotalCount-totalSeats), updateRegCountCallback,false)
                 }
-                updateRegCount(-(currSeats-prevCurrCount), (regCount) => {
-                    program.registrationCount = regCount;
-                });
             } else if (prevCurrCount > currSeats) {
                 if (prevTotalCount <= totalSeats) {
-                    updateSeats(courseCode, -(prevCurrCount-currSeats), totalSeats-prevTotalCount, updateLocalSeats_UI_callback, false)
+                    updateSeats(courseCode, -(prevCurrCount-currSeats), totalSeats-prevTotalCount, updateRegCountCallback, false)
                 } else if (prevTotalCount > totalSeats) {
-                    updateSeats(courseCode, -(prevCurrCount-currSeats), -(prevTotalCount-totalSeats), updateLocalSeats_UI_callback, false)
+                    updateSeats(courseCode, -(prevCurrCount-currSeats), -(prevTotalCount-totalSeats), updateRegCountCallback, false)
                 }
-                updateRegCount(prevCurrCount-currSeats, (regCount) => {
-                    program.registrationCount = regCount;
-                });
             }
 
-            function updateLocalSeats_UI_callback(courseCode, course) {
-                var index = findCoursesInArr(sortedCourses, 'id', courseCode, false);
-                if (index>=0) {
-                    sortedCourses[index].currSeats = course.currSeats;
-                    sortedCourses[index].totalSeats = course.totalSeats;
-                }
-                program.courses[courseCode].currSeats = course.currSeats;
-                program.courses[courseCode].totalSeats = course.totalSeats;
-    
-                // update the UI
-                document.getElementById("curr_seats:"+ courseCode).innerHTML = course.currSeats;
-                document.getElementById("total_seats:" + courseCode).innerHTML = "/" + course.totalSeats;
-                showCourseInfoCard(courseCode);
-    
+            function updateRegCountCallback(increment) {
+                updateRegCount(-1*increment, false, function () {
+                    showCourseInfoCard(id);
+                });
             }
         }
     } else {
-        showCourseInfoCard(courseCode);
+        showCourseInfoCard(id);
     }
 }
 
-function showCourseInfoCard(courseCode) {
-    var currSeatElem = document.getElementById("seats:" + courseCode);
-    currSeatElem.style.display = "flex";
-    var totalSeatELem = document.getElementById("course_btn:" + courseCode);
-    totalSeatELem.style.display = "flex";
+function showCourseInfoCard(id) {
 
-    var totalSeatELem = document.getElementById("seats_edit:" + courseCode);
-    totalSeatELem.style.display = "none";
+    var idArr = id.split(":");
+    var courseCode = idArr[idArr.length-1];
 
+    document.getElementById("seats:" + courseCode).style.display = "flex";
+    document.getElementById("course_btn:" + courseCode).style.display = "flex";
+    document.getElementById("seats_edit:" + courseCode).style.display = "none";
+
+    document.getElementById("main_info:" + courseCode).style.display = "flex";
     document.getElementById("course_info_edit_btn:" + courseCode).style.display = "inline-flex";
+    document.getElementById("course_info_moreInfo_btn:" + courseCode).style.display = "inline-flex";
+    document.getElementById("more_info:" + courseCode).style.display = "none";
     document.getElementById("course_info_cross_btn:" + courseCode).style.display = "none";
     document.getElementById("course_info_tick_btn:" + courseCode).style.display = "none";
     document.getElementById("course_info_del_btn:" + courseCode).style.display = "none";
+}
+
+function switchToCourseMoreInfoCard(id) {
+    var idArr = id.split(":");
+    var courseCode = idArr[idArr.length-1];
+
+    document.getElementById("main_info:" + courseCode).style.display = "none";
+    document.getElementById("more_info:" + courseCode).style.display = "flex";
 }

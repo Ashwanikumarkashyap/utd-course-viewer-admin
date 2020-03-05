@@ -115,19 +115,7 @@ function submitCourseForm() {
     var courses = fetchFormInfo();
 
     for (var i=0; i <courses.length;i++) {
-        addCourse(courses[i], i, (newPostKey, index) => {
-            
-            // update the local database
-            program.courses[newPostKey] = courses[index];
-            var insertIndex = findCoursesInArr(sortedCourses, 'code', courses[index].code, true);
-            insertIndex = -1*(insertIndex);
-            var obj = JSON.parse(JSON.stringify(courses[index]));
-            obj.id = newPostKey;
-            sortedCourses.splice(insertIndex, 0, obj);
-            
-
-            // update the UI
-            createCourseGrid(sortedCourses);
+        addCourse(courses[i], i, (index) => {
             removeFormField("course_input:" + index);
         });
     }
@@ -177,27 +165,27 @@ function fetchFormInfo() {
 
         var MInput = document.getElementById("day_time_input_M:" + i).value;
         if (MInput.length>0) {
-            days.monday = MInput;
+            days.m = MInput;
         }
         var TInput = document.getElementById("day_time_input_T:" + i).value;
         if (TInput) {
-            days.tuesday = TInput;
+            days.t = TInput;
         }
         var WInput = document.getElementById("day_time_input_W:" + i).value;
         if (WInput) {
-            days.wednesday = WInput;
+            days.w = WInput;
         }
         var ThInput = document.getElementById("day_time_input_TH:" + i).value;
         if (ThInput) {
-            days.thursday = ThInput;
+            days.th = ThInput;
         }
         var FInput = document.getElementById("day_time_input_F:" + i).value;
         if (FInput) {
-            days.friday = FInput;
+            days.f = FInput;
         }
         var SInput = document.getElementById("day_time_input_S:" + i).value;
         if (SInput) {
-            days.saturday = SInput;
+            days.s = SInput;
         }
         course.days = days;
 

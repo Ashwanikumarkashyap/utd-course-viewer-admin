@@ -33,7 +33,7 @@ function createElemUtil(parent, id_, class_, type, isPrepend, index) {
 
     if (parent_elem != undefined) {
 
-        if (index) {
+        if (index!=undefined) {
             var afterChild =  parent_elem.children[index];
             if (afterChild) {
                 parent_elem.insertBefore(elem, afterChild);
