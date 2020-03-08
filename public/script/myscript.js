@@ -373,9 +373,11 @@ function switchToCourseMoreInfoCard(id) {
 
 function toggelAboutBlock() {
     var aboutBlock = document.getElementById("about_block");
-    if( $(aboutBlock).css('display') == 'none') {
+    if($(aboutBlock).css('display') == 'none') {
         aboutBlock.style.display = "flex";
+        $("#black_overlay").css('display', 'block');
     } else {
+        $("#black_overlay").css('display', 'none');
         aboutBlock.style.display = "none";
     }
 }

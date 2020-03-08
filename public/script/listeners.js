@@ -73,6 +73,7 @@ firebase.auth().onAuthStateChanged(function(user_) {
         // update the UI
         document.getElementById("logout_btn").style.display = "none";
         document.getElementById("about_block").style.display = "none";
+        document.getElementById("black_overlay").style.display = "none";
         document.getElementById("search_block").style.display = "none";
         $("#courses_form").remove();
         var courseGrid = document.getElementById("course_grid");
