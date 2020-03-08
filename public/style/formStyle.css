@@ -25,7 +25,7 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: space-evenly;
-        padding: 20px;
+        padding: 0px 20px 20px;
         margin-bottom: 20px;
         margin-top: 20px;
         background: #e7dbdb;
@@ -148,7 +148,7 @@
 
     .content {
         padding: 10px;
-        background: #bc8848;
+        background: #ba905c;
         color: white;
         display: none;
         overflow: hidden;

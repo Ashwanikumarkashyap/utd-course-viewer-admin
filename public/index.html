@@ -20,10 +20,28 @@
         <div id="title" class="title">Fetching the resources..</div>
         <i id="logout_btn" onClick="logout()" class="fa fa-power-off logout_btn" ></i>
     </div>
+    
     <div id="search_block" class="search_block">
-        <input type="text" id="searchField" class= "searchField" onkeyup="searchCourse()" placeholder="Search for the courses"
+        <div id="search_input_block" class="search_input_block">
+            <input type="text" id="searchField" class= "searchField" onkeyup="searchCourse()" placeholder="Search for the courses"
             title="Type the course code">
-        <button class="add_course_btn" id="add_course_btn" onClick="addCoursesForm()"> <i class="fa fa-plus"></i> Add a course</button>
+            <i id="about" onClick="toggelAboutBlock()" class="about fa fa-question-circle"></i>
+        </div>
+        
+        <button class="add_course_btn" id="add_course_btn" onClick="addCoursesForm()"> <i style="margin-right: 4px; margin-top: 1px;" class="fa fa-plus"></i> Course</button>
+    </div>
+
+    <div id="about_block" class="about_block">
+        <i id="logout_btn" class="fa removeFFBtn fa-times" onClick="toggelAboutBlock()"></i>
+        <div id="about_block_content" class="about_block_content">
+            <p style="margin-bottom: 4px;">Supported queries</p>
+            <ul id="about_block_content_li" class="about_block_content_li">
+                <li>Queries for 'course name', 'code', 'instructer', 'location'.</li>
+                <li>Queries for open ('open'), closed ('closed') courses.</li>
+                <li>Only 'and queries' (query1 && query2 && .. )</li>
+                <li>Only 'or queries' (query1 || query2 || .. )</li>
+            </ul>
+        </div>
     </div>
     
     

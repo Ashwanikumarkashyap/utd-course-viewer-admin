@@ -11,6 +11,44 @@
         min-height: 100vh;
         position: relative;
     }
+
+    .about_block {
+        background: #2c2c2bf5;
+        width: 50%;
+        position: absolute;
+        z-index: 1;
+        left:0;
+        right:0;
+        margin-left:auto;
+        margin-right:auto;
+        box-shadow: 0px 2px 8px 0px #000000;
+        top: 150px;
+        border-radius: 6px;
+        display: none;
+        padding: 20px;
+        color: white;
+    }
+
+    .about_block_content {
+        width: 100%;
+        text-align: left;
+    }
+
+    .about {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        font-size: 25px;
+        color: #878585;
+        margin: 0px 8px 0px 0px;
+        cursor: pointer;
+    }
+    
+    .about_block_content_li {
+        list-style-type: square;
+        margin: 0;
+    }
+    
     
     .title_block  {
         font-size: 1.5em;
@@ -34,21 +72,28 @@
     }
 
     .search_block{
-        padding: 0 3%;
+        padding: 0 6%;
         margin-top: 20px;
         display: flex;
-        flex-wrap: wrap;
         justify-content: center;
         display: none;
     }
 
+    .search_input_block {
+        display: flex;
+        min-width: 60%;
+        border: 3px solid;
+        /* height: 50px; */
+        background: white;
+        margin: 10px 0px;
+    }
+
     .searchField {
         font-size: 16px;
-        width: 55%;
+        width: 100%;
         padding: 10px 15px;
-        border: 3px solid;
-        height: 50px;
-        margin: 10px 0px;
+        height: 100%;
+        border: none;
     }
 
     input:focus {
@@ -86,7 +131,7 @@
 
     .filter_div {
         position: relative;
-        background-color: #4a4f4c;
+        background: #4a4f4c;
         color: #ffffff;
         width: 20em;
         /* border-radius: 6px; */
@@ -126,13 +171,14 @@
         font-size: 1em;
         color: white;
         cursor: pointer;
-        background: #4a83ac;
+        background: #7d9eba;
         outline: none;
         margin: 13px;
-        height: 44px;
         -webkit-transition-duration: 0.4s;
         transition-duration: 0.4s;
         box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        display: flex;
+        flex-wrap: nowrap;
     }
 
     
@@ -161,6 +207,7 @@
         font-size: 1em;
         height: 45%;
         margin-top: 14%;
+        margin-left: 5px;
         background-color: #89b589;
         -webkit-transition-duration: 0.4s;
         transition-duration: 0.4s;
@@ -186,6 +233,7 @@
         text-align: center;
         cursor: pointer;
         box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        margin-left: 5px;
     }
 
     .dec_btn:hover {
@@ -390,5 +438,10 @@
     @media only screen and (max-width: 600px) {
         .login_block {
             width: 19em;
+        }
+
+        .about_block {
+            background: #2c2c2bf5;
+            width: 80%;
         }
     }

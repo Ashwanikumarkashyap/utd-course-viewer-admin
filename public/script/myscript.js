@@ -1,8 +1,3 @@
-function searchCourse() {
-    let input = document.getElementById("searchField").value.toUpperCase().trim();
-    filterCourseGrid(input);
-}
-
 function createCourseGrid(courses) {
 
     var courseGrid = document.getElementById("course_grid");
@@ -66,6 +61,12 @@ function createCourseGrid(courses) {
             var seats = createElemUtil(main_info.id, "seats:" + courses[i].id, "seats", "div");
             var currSeats = createElemUtil(seats.id, "curr_seats:" + courses[i].id, "curr_seats", "p");
             currSeats.innerHTML = courses[i].currSeats;
+
+            if (courses[i].currSeats == 0) {
+                document.getElementById(courseContainer.id).style.background = "#6e3e3e";
+            } else {
+                document.getElementById(courseContainer.id).style.background = "#4a4f4c";
+            }
 
             var total_seats = createElemUtil(seats.id, "total_seats:" + courses[i].id, "total_seats", "p");
             total_seats.innerHTML = "/" + courses[i].totalSeats;
@@ -132,6 +133,12 @@ function createCourseGrid(courses) {
         } else {
             document.getElementById("curr_seats:"+ courses[i].id).innerHTML = courses[i].currSeats;
             document.getElementById("total_seats:" + courses[i].id).innerHTML = "/" + courses[i].totalSeats;
+
+            if (courses[i].currSeats == 0) {
+                document.getElementById(courseContainer.id).style.background = "#6e3e3e";
+            } else {
+                document.getElementById(courseContainer.id).style.background = "#4a4f4c";
+            }
             
             var currInputFeild = document.getElementById("curr_seats_edit_input:" + courses[i].id);
             var totalInputFeild = document.getElementById("total_seats_edit_input:" + courses[i].id);
@@ -141,18 +148,81 @@ function createCourseGrid(courses) {
     }
 }
 
-function filterCourseGrid(SearchKey) {
+function searchCourse() {
+    let searchKey = document.getElementById("searchField").value.toUpperCase().trim();
+    filterCourseGrid(searchKey);
+}
+
+function filterCourseGrid(searchKeys) {
+    let queryType = null;
+    let searchKeysArr = []
+
+    if (searchKeys.includes("&&") && searchKeys.includes("||")) {
+        return;
+    } else if (searchKeys.includes("&&")) {
+        searchKeysArr = searchKeys.split("&&");
+        queryType = "&&";
+    } else if (searchKeys.includes("||")) {
+        searchKeysArr = searchKeys.split("||");
+        queryType = "||";
+    } else {
+        if (searchKeys.trim().length==0) {
+            $(".filter_div").css("display", "flex");
+            return;
+        }
+        searchKeysArr.push(searchKeys);
+    }
+
+    filteredCourses = [];
+    let index = 0;
+    searchKeysArr.forEach((key)=> {
+        key = key.trim();
+        if (key.length>0) {
+            filteredCourses = filterCourseUtil(key, filteredCourses, queryType, index)
+            index++;
+        }
+    })
+
     let courses = program.courses;
-    for (let [key, value] of Object.entries(courses)) {
-        if (key.length != 0 && ((value.code.toString().toUpperCase()).indexOf(SearchKey) <= -1
-            && (value.location.toString().toUpperCase()).indexOf(SearchKey) <= -1
-            && (value.name.toString().toUpperCase()).indexOf(SearchKey) <= -1
-            && (value.iname.toString().toUpperCase()).indexOf(SearchKey) <= -1)) {
-            document.getElementById(key).style.display = "none";
-        } else {
+    for (let [key] of Object.entries(courses)) {
+        if (filteredCourses.includes(key)) {
             document.getElementById(key).style.display = "flex";
+        } else {
+            document.getElementById(key).style.display = "none";
         }
     }
+}
+
+function filterCourseUtil(searchKeys, filteredCourses, queryType, index) {
+    let courses = program.courses;
+
+    for (let [key, value] of Object.entries(courses)) {
+        if (filterMatch(searchKeys, value)) {
+            if ((queryType == "&&" && index==0) || (queryType!="&&" && !filteredCourses.includes(key))) {
+                filteredCourses.push(key);
+            }
+        } else {
+            if (index!=0 && queryType == "&&" && filteredCourses.includes(key)) {
+                filteredCourses.splice(filteredCourses.indexOf(key), 1);
+            }
+        }
+    }
+
+    return filteredCourses;
+}
+
+function filterMatch(searchKey, courseValue) {
+
+    if (((courseValue.code.toString().toUpperCase()).indexOf(searchKey) >= 0) ||
+        ((courseValue.location.toString().toUpperCase()).indexOf(searchKey) >= 0) ||
+        ((courseValue.name.toString().toUpperCase()).indexOf(searchKey) >=0) ||
+        ((courseValue.iname.toString().toUpperCase()).indexOf(searchKey) >= 0) ||
+        (searchKey == "OPEN" && courseValue.currSeats!=0) ||
+        (searchKey == "CLOSED" && courseValue.currSeats==0)
+        ) {
+        return true;
+    }
+    return false;
 }
 
 function removeCourse(id) {
@@ -299,4 +369,13 @@ function switchToCourseMoreInfoCard(id) {
 
     document.getElementById("main_info:" + courseCode).style.display = "none";
     document.getElementById("more_info:" + courseCode).style.display = "flex";
+}
+
+function toggelAboutBlock() {
+    var aboutBlock = document.getElementById("about_block");
+    if( $(aboutBlock).css('display') == 'none') {
+        aboutBlock.style.display = "flex";
+    } else {
+        aboutBlock.style.display = "none";
+    }
 }
